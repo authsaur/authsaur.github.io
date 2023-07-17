@@ -237,7 +237,7 @@ service [OPTIONAL]- 客户端尝试访问的应用程序的标识符。在几乎
 </ul>
 <p>这两个主体通过用户浏览器进行信息交换。方式上，比如CAS Client可以返回带参数的重定向，将信息转发给CAS Server。登录验证成功后CAS Server会返回CAS Client一个包含用户信息的XML， CAS Client验证用户信息后会返回给用户访问资源。</p>
 <h2 id="cas-流程">CAS 流程</h2>
-<p><img src="/../../_common-resources/cas.png" alt=""></p>
+<p><img src="/_common-resources/cas.png" alt=""></p>
 <ol>
 <li>用户试图登录CAS Client提供的应用。</li>
 <li>CAS Client会分析该请求的Http请求中是否包含认证票据ST，如果没有，则说明当前用户尚未认证，于是重定向CAS Server，并传递Service （也就是要访问的目的资源地址）。</li>

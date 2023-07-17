@@ -34,11 +34,11 @@
 &lt;ul&gt;
 &lt;li&gt;点击菜单【用户】，进入我的企业&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/user-list.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/user-list.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;点击按钮【创建用户】，密码默认规则：8-10位，至少包含大小写字母、数字和特殊字符。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/user-add.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/user-add.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;用户创建成功&lt;/li&gt;
 &lt;/ul&gt;
@@ -66,15 +66,15 @@
 &lt;ul&gt;
 &lt;li&gt;点击菜单【应用】，点击按钮【创建应用】&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/app-list.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/app-list.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;选择标准协议，这里选择OAuth2协议&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/app-protocol.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/app-protocol.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;填写OAuth2应用信息&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/app-oauth.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/app-oauth.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 
 
 &lt;div class=&#34;alert alert-primary&#34; role=&#34;alert&#34;&gt;
@@ -112,15 +112,15 @@ OAuth2应用的登录地址为：&lt;/li&gt;
 &lt;ul&gt;
 &lt;li&gt;点击菜单【认证】，点击按钮【创建认证器】&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/auth-list.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/auth-list.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;选择LDAP认证器&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/auth-add.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/auth-add.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;填写LDAP信息&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/auth-ldap.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/auth-ldap.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;认证器创建成功，LDAP身份源会自动创建。&lt;/li&gt;
 &lt;/ul&gt;
@@ -147,11 +147,11 @@ OAuth2应用的登录地址为：&lt;/li&gt;
 &lt;ul&gt;
 &lt;li&gt;点击菜单【权限】，选择应用&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/author-list.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/author-list.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;点击按钮【添加用户授权】，选择指定用户。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/author-add.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/author-add.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;指定用户授权成功，其它用户无权访问。&lt;/li&gt;
 &lt;/ul&gt;
@@ -178,7 +178,7 @@ OAuth2应用的登录地址为：&lt;/li&gt;
 &lt;ul&gt;
 &lt;li&gt;点击菜单【认证】，点击按钮【创建认证器】，选择OTP口令&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/otp-add.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/otp-add.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 
 
 &lt;div class=&#34;alert alert-primary&#34; role=&#34;alert&#34;&gt;
@@ -196,11 +196,11 @@ OAuth2应用的登录地址为：&lt;/li&gt;
 &lt;ul&gt;
 &lt;li&gt;登录Authsaur后，扫码输入一次口令，注册安全设备&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/otp-register.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/otp-register.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;再次输入口令，进行双因素认证&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/otp-login.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/otp-login.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;双因素认证一切就绪。&lt;/li&gt;
 &lt;/ul&gt;
@@ -227,7 +227,7 @@ OAuth2应用的登录地址为：&lt;/li&gt;
 &lt;ul&gt;
 &lt;li&gt;点击菜单【认证】，点击按钮【创建认证器】，选择钉钉&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/dingtalk-add.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/dingtalk-add.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 
 
 &lt;div class=&#34;alert alert-primary&#34; role=&#34;alert&#34;&gt;
@@ -245,15 +245,15 @@ OAuth2应用的登录地址为：&lt;/li&gt;
 &lt;ul&gt;
 &lt;li&gt;登录钉钉管理后台，创建H5微应用，记录下 AppKey，AppSecret。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/dingtalk-admin-create.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/dingtalk-admin-create.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;钉钉管理后台，进入【登录与分享设置】,设置Authsaur回调地址&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/dingtalk-admin-login.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/dingtalk-admin-login.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;钉钉管理后台，进入【权限管理】&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/../../_common-resources/images/dingtalk-admin-author.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/_common-resources/images/dingtalk-admin-author.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;- 个人手机号信息	
 - 通讯录个人信息读权限	
 - 调用SNS API时需要具备的基本权限	
