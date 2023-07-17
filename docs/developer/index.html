@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.112.1">
-<link rel="alternate" type="application/rss&#43;xml" href="/docs/index.xml">
+<link rel="alternate" type="application/rss&#43;xml" href="/docs/developer/index.xml">
 <meta name="robots" content="index, follow">
 
 
@@ -19,15 +19,15 @@
 <link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
-<title>文档 | Authsaur</title>
+<title>开发者 | Authsaur</title>
 <meta name="description" content="Authsaur 官方网站">
-<meta property="og:title" content="文档" />
+<meta property="og:title" content="开发者" />
 <meta property="og:description" content="Authsaur 官方网站" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="/docs/" />
-<meta itemprop="name" content="文档">
+<meta property="og:url" content="/docs/developer/" />
+<meta itemprop="name" content="开发者">
 <meta itemprop="description" content="Authsaur 官方网站"><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="文档"/>
+<meta name="twitter:title" content="开发者"/>
 <meta name="twitter:description" content="Authsaur 官方网站"/>
 
 
@@ -84,7 +84,7 @@
   <nav class="collapse td-sidebar-nav" id="td-section-nav">
     <ul class="td-sidebar-nav__section pr-md-3 ul-0">
       <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-docs-li">
-  <a href="/docs/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__section tree-root" id="m-docs"><span class="td-sidebar-nav-active-item">文档</span></a>
+  <a href="/docs/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-docs"><span class="">文档</span></a>
   <ul class="ul-1">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docswhat-li">
   <a href="/docs/what/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-docswhat"><span class="">什么是Authsaur</span></a>
@@ -128,8 +128,8 @@
   <a href="/docs/ha/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-docsha"><span class="">高可用集群</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsbuild-li">
   <a href="/docs/build/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-docsbuild"><span class="">源码构建</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsdeveloper-li">
-  <a href="/docs/developer/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-docsdeveloper"><span class="">开发者</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-docsdeveloper-li">
+  <a href="/docs/developer/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__section" id="m-docsdeveloper"><span class="td-sidebar-nav-active-item">开发者</span></a>
 </li>
   </ul>
 </li>
@@ -144,7 +144,24 @@
 
 </div>
 
-            
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#工具">工具</a></li>
+    <li><a href="#一致性">一致性</a></li>
+    <li><a href="#文档">文档</a></li>
+    <li><a href="#括号">括号</a></li>
+    <li><a href="#无需else">无需else</a></li>
+    <li><a href="#gettersetter-方法">Getter/Setter 方法</a></li>
+    <li><a href="#构造函数">构造函数</a></li>
+    <li><a href="#缩进">缩进</a></li>
+    <li><a href="#静态成员">静态成员</a></li>
+    <li><a href="#日志">日志</a></li>
+    <li><a href="#var关键词的使用">var关键词的使用</a></li>
+  </ul>
+</nav>
+      </div>
+    
             
 
 	
@@ -175,7 +192,7 @@
             
             
 <div class="td-content">
-	<h1>文档</h1>
+	<h1>开发者</h1>
   
 	<header class="article-meta">
 		
@@ -194,13 +211,51 @@
 
 		
 	</header>
-	
-
-<div class="pageinfo pageinfo-primary">
-<p>文档版本1.0.0-beta。</p>
-
-</div>
-
+	<p>在 Apache 和 Eclipse 等成熟项目的引领下，Authsaur 中的所有代码都将遵守Java 代码约定以及下面列出的 Authsaur 特定约定。Javadoc 应该存在于所有公开导出的类成员中并遵循标准准则。</p>
+<p>以下文档描述了 Authsaur 项目特有的一组编码约定：</p>
+<h2 id="工具">工具</h2>
+<p>当前的代码库利用Checkstyle 引擎来尽可能地强制执行约定。还使用SpotBugs执行一定数量的检查。
+在适当的情况下，代码库利用Project Lombok自动生成代码构造，例如 getter 和 setter 等。</p>
+<h2 id="一致性">一致性</h2>
+<p>引入新的组件、字段和文件时，尽量与现有的命名模式保持一致。例如，如果 Authsaur 组件被命名为SimpleCipherExecutor，那么它的自然替代方案可能会被设计为FancyCipherExecutor。</p>
+<h2 id="文档">文档</h2>
+<p>一般来说，所有公共 API 都应在合理的范围内得到充分记录，并且所有 Authsaur 配置设置和属性都应通过示例、默认值等进行充分解释，作为该领域 Javadoc 的一部分。</p>
+<h2 id="括号">括号</h2>
+<p>所有括号都应以紧凑的形式出现，即使对于单行语句也是强制性的。</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">FooClass</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">barMethod</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span> <span style="color:#719e07">(...)</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#586e75">// single line statement
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span></code></pre></div><h2 id="无需else">无需else</h2>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">FooClass</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> String <span style="color:#268bd2">barMethod</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span> <span style="color:#719e07">(...)</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> <span style="color:#2aa198">&#34;foo&#34;</span><span style="color:#719e07">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>         
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">return</span> bar<span style="color:#719e07">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span></code></pre></div><h2 id="gettersetter-方法">Getter/Setter 方法</h2>
+<p>为字段生成 Getter/Setter 方法通常使用 Project Lombok@Getter和@Setter注释来完成。</p>
+<h2 id="构造函数">构造函数</h2>
+<p>创建构造函数通常使用 Project Lombok@NoArgsConstructor或注释来@AllArgsConstructor完成@RequiredArgsConstructor。</p>
+<h2 id="缩进">缩进</h2>
+<p>代码缩进应设置为使用 4 个空格。制表符不应该用于缩进。</p>
+<h2 id="静态成员">静态成员</h2>
+<p>静态成员变量将始终为大写，其中每个单词由下划线分隔：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#268bd2">private</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">final</span> String SOME_OBJECT <span style="color:#719e07">=</span> <span style="color:#2aa198">&#34;TheObject&#34;</span><span style="color:#719e07">;</span> 
+</span></span></code></pre></div><h2 id="日志">日志</h2>
+<p>我们使用SLF4J进行日志记录。除非另有说明，否则LOGGER将使用 Project Lombok 的注释生成对象@Slf4j。</p>
+<p>参数化日志消息是首选：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#268bd2">final</span> Object entry <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> SomeObject<span style="color:#719e07">();</span>
+</span></span><span style="display:flex;"><span>logger<span style="color:#719e07">.</span>debug<span style="color:#719e07">(</span><span style="color:#2aa198">&#34;The entry is {}.&#34;</span><span style="color:#719e07">,</span> entry<span style="color:#719e07">);</span>
+</span></span></code></pre></div><p>与检查特定日志记录级别和通过 String 对象连接参数相比，这是首选方法。</p>
+<h2 id="var关键词的使用">var关键词的使用</h2>
+<p>局部变量推荐使用 Project Lombok 的val. 在需要可变性的情况下，var建议使用。</p>
 
         <div class="section-index">
     
@@ -211,72 +266,6 @@
     
     
     
-    <hr class="panel-line">
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/docs/what/">什么是Authsaur</a>
-                </h5>
-                <p></p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/docs/deploy/">安装部署</a>
-                </h5>
-                <p></p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/docs/console/">控制台</a>
-                </h5>
-                <p></p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/docs/guide/">快速使用</a>
-                </h5>
-                <p></p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/docs/protocol/">概念和协议</a>
-                </h5>
-                <p></p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/docs/ha/">高可用集群</a>
-                </h5>
-                <p></p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/docs/build/">源码构建</a>
-                </h5>
-                <p></p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/docs/developer/">开发者</a>
-                </h5>
-                <p></p>
-            </div>
-        
     
 </div>
 

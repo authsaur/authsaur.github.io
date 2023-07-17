@@ -1,0 +1,472 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-cn" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.112.1">
+<meta name="robots" content="index, follow">
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>SAML2协议 | Authsaur</title>
+<meta name="description" content="SAML，全称为Security Assertion Markup Language，是一种用于安全性断言的标记语言，目前的最新版本是2.0。
+它是一个基于XML的标准，用于在不同的安全域(security domain)之间交换认证和授权数据。SAML2.0可以帮助我们跨域实现单点登录。
+术语介绍 服务提供方(Service Provider，简称SP)，服务提供的实体。
+身份提供方（Identity Provider，简称IDP），身份提供的实体，包含对用户进行身份验证的能力。在SAML协议里，严格规范了IDP和SP之间传输的Token格式。
+SAML请求（SAMLRequest），由SP生成，发送给IDP的身份验证请求，所以一般也叫做AuthnRequest（Authentication Request）。
+SAML响应（SAMLResponse），由IDP生成，携带用户身份信息，发送给SP的身份验证结果，所以一般也叫做SAMLAssertion。
+服务提供方发起（SP-initiated），表示整个认证流程是由SP发起的，当客户直接访问SP的资源或网站时，跳转到IDP再跳转回来的过程，我们就称这个过程是SP-initiated的单点登录。
+认证提供方发起（IDP-initiated），表示整个认证流程是由IDP发起的，IDP直接提供SAML响应给到SP方，验证用户身份。
+SAML认证流程 下面介绍的是一个SP-initiated的完整认证流程，IDP-initiated可以理解为是SP-initiated的简化部分。
+用户打开SP地址。
+SP接收到请求之后，携带SAMLRequest请求到到IDP处（SAMLRequest的格式后面会给出）。
+IDP接收到SAMLRequest后，会在IDP验证用户身份，玉符统一身份会检查当前用户是否登录，如果未登录跳转登录页面。
+IDP验证身份通过后，会重定向到SP，携带SAMLResponse（SAMLResponse的格式后面会给出）。
+SP验证SAMLResponse，验证通过后取出SAMLResponse里携带的用户信息，访问对应的用户。
+SAMLRequest介绍 下面是一个SAMLRequest的XML示例:
+&amp;lt;saml2p:AuthnRequest xmlns:saml2p=&amp;#34;urn:oasis:names:tc:SAML:2.0:protocol&amp;#34; AssertionConsumerServiceURL=&amp;#34;https://www.sp.com/saml/acs&amp;#34; Destination=&amp;#34;https://www.idp.com/saml/authn&amp;#34; ForceAuthn=&amp;#34;false&amp;#34; ID=&amp;#34;_7xvtiohf7xupg9ulo8an1g4bemeranpifvup&amp;#34; IsPassive=&amp;#34;false&amp;#34; IssueInstant=&amp;#34;2019-07-25T09:59:02.467Z&amp;#34; ProtocolBinding=&amp;#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&amp;#34; Version=&amp;#34;2.0&amp;#34;&amp;gt; &amp;lt;saml2:Issuer xmlns:saml2=&amp;#34;urn:oasis:names:tc:SAML:2.0:assertion&amp;#34;&amp;gt;https://www.sp.com&amp;lt;/saml2:Issuer&amp;gt; &amp;lt;/saml2p:AuthnRequest&amp;gt; 在实际请求中，还需要将SAMLReqeust进行Base64编码，上文示例的SAMLRequest进行Base64编码之后如下：
+fZFBT8JAEIXvJv6Hzd5pSwPWbigJSowkGhuoHryYpQywSTu77uwWfr6lYISYcJ158&#43;bNNyOSdRUbMfFui3P49kCO7esKSRw7GfcWhZakSKCsgYQrxWLy&#43;iLiIBLGaqdLXXE2IQLrlMZHjeRrsAuwjSrhff6S8a1zhkQY7na7gExQ6jo8uIeyJM6m7UqF8jB7qVSrc&#43;khIGdP2pbQhc34WlYEnM2mGf9K9k1rsF0ne282qa/0vcT&#43;ZrCENolEo9aNN62UckmkGvgbJvIwQ3ISXcbjqJ/2oqQXD4soFcNURHEwuEs&#43;OctPhz4oXCncXKeyPIpIPBdF3svfFgVnH2Cpu7AV8PHtDWOjDrDoEthz5tfN5S9oPv6PdRSem7ZrToXLB49/AA== 当服务提供方SP未登录时，需要跳转到认证提供方IDP的地址，进行身份验证操作，最终生成的URL如下所示：
+https://www.idp.com/saml/authn?SAMLRequest=fZFBT8JAEIXvJv6Hzd5pSwPWbigJSowkGhuoHryYpQywSTu77uwWfr6lYISYcJ158&#43;bNNyOSdRUbMfFui3P49kCO7esKSRw7GfcWhZakSKCsgYQrxWLy&#43;iLiIBLGaqdLXXE2IQLrlMZHjeRrsAuwjSrhff6S8a1zhkQY7na7gExQ6jo8uIeyJM6m7UqF8jB7qVSrc&#43;khIGdP2pbQhc34WlYEnM2mGf9K9k1rsF0ne282qa/0vcT&#43;ZrCENolEo9aNN62UckmkGvgbJvIwQ3ISXcbjqJ/2oqQXD4soFcNURHEwuEs&#43;OctPhz4oXCncXKeyPIpIPBdF3svfFgVnH2Cpu7AV8PHtDWOjDrDoEthz5tfN5S9oPv6PdRSem7ZrToXLB49/AA== SAMLResponse介绍 当IDP接受到服务提供方SP发起的SAMLRequest时，会在IDP的域内进行身份认证操作，完成登录行为之后，会携带当前登录的用户身份，发送SAMLResponse给到服务提供方SP。
+下面是一个SAMLResponse的XML示例:
+&amp;lt;saml2p:Response xmlns:saml2p=&amp;#34;urn:oasis:names:tc:SAML:2.0:protocol&amp;#34; Destination=&amp;#34;https://www.sp.com/saml/acs&amp;#34; ID=&amp;#34;_80ff50f0-73e9-4357-934e-15939aa197ae&amp;#34; InResponseTo=&amp;#34;_7xvtiohf7xupg9ulo8an1g4bemeranpifvup&amp;#34; IssueInstant=&amp;#34;2019-07-25T09:59:01.653Z&amp;#34; Version=&amp;#34;2.0&amp;#34;&amp;gt; &amp;lt;saml2:Issuer xmlns:saml2=&amp;#34;urn:oasis:names:tc:SAML:2.0:assertion&amp;#34;&amp;gt;https://www.idp.com&amp;lt;/saml2:Issuer&amp;gt; &amp;lt;saml2p:Status&amp;gt; &amp;lt;saml2p:StatusCode Value=&amp;#34;urn:oasis:names:tc:SAML:2.0:status:Success&amp;#34;/&amp;gt; &amp;lt;/saml2p:Status&amp;gt; &amp;lt;saml2:Assertion xmlns:saml2=&amp;#34;urn:oasis:names:tc:SAML:2.0:assertion&amp;#34; ID=&amp;#34;_ee51e413-cb8c-4cff-a833-8e5ab5a65712&amp;#34; IssueInstant=&amp;#34;2019-07-25T09:59:01.653Z&amp;#34; Version=&amp;#34;2.0&amp;#34;&amp;gt; &amp;lt;saml2:Issuer&amp;gt;https://www.idp.com&amp;lt;/saml2:Issuer&amp;gt; &amp;lt;ds:Signature xmlns:ds=&amp;#34;http://www.w3.org/2000/09/xmldsig#&amp;#34;&amp;gt; &amp;lt;ds:SignedInfo&amp;gt; &amp;lt;ds:CanonicalizationMethod Algorithm=&amp;#34;http://www.w3.org/2001/10/xml-exc-c14n#&amp;#34;/&amp;gt; &amp;lt;ds:SignatureMethod Algorithm=&amp;#34;http://www.">
+<meta property="og:title" content="SAML2协议" />
+<meta property="og:description" content="SAML，全称为Security Assertion Markup Language，是一种用于安全性断言的标记语言，目前的最新版本是2.0。
+它是一个基于XML的标准，用于在不同的安全域(security domain)之间交换认证和授权数据。SAML2.0可以帮助我们跨域实现单点登录。
+术语介绍 服务提供方(Service Provider，简称SP)，服务提供的实体。
+身份提供方（Identity Provider，简称IDP），身份提供的实体，包含对用户进行身份验证的能力。在SAML协议里，严格规范了IDP和SP之间传输的Token格式。
+SAML请求（SAMLRequest），由SP生成，发送给IDP的身份验证请求，所以一般也叫做AuthnRequest（Authentication Request）。
+SAML响应（SAMLResponse），由IDP生成，携带用户身份信息，发送给SP的身份验证结果，所以一般也叫做SAMLAssertion。
+服务提供方发起（SP-initiated），表示整个认证流程是由SP发起的，当客户直接访问SP的资源或网站时，跳转到IDP再跳转回来的过程，我们就称这个过程是SP-initiated的单点登录。
+认证提供方发起（IDP-initiated），表示整个认证流程是由IDP发起的，IDP直接提供SAML响应给到SP方，验证用户身份。
+SAML认证流程 下面介绍的是一个SP-initiated的完整认证流程，IDP-initiated可以理解为是SP-initiated的简化部分。
+用户打开SP地址。
+SP接收到请求之后，携带SAMLRequest请求到到IDP处（SAMLRequest的格式后面会给出）。
+IDP接收到SAMLRequest后，会在IDP验证用户身份，玉符统一身份会检查当前用户是否登录，如果未登录跳转登录页面。
+IDP验证身份通过后，会重定向到SP，携带SAMLResponse（SAMLResponse的格式后面会给出）。
+SP验证SAMLResponse，验证通过后取出SAMLResponse里携带的用户信息，访问对应的用户。
+SAMLRequest介绍 下面是一个SAMLRequest的XML示例:
+&lt;saml2p:AuthnRequest xmlns:saml2p=&#34;urn:oasis:names:tc:SAML:2.0:protocol&#34; AssertionConsumerServiceURL=&#34;https://www.sp.com/saml/acs&#34; Destination=&#34;https://www.idp.com/saml/authn&#34; ForceAuthn=&#34;false&#34; ID=&#34;_7xvtiohf7xupg9ulo8an1g4bemeranpifvup&#34; IsPassive=&#34;false&#34; IssueInstant=&#34;2019-07-25T09:59:02.467Z&#34; ProtocolBinding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&#34; Version=&#34;2.0&#34;&gt; &lt;saml2:Issuer xmlns:saml2=&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34;&gt;https://www.sp.com&lt;/saml2:Issuer&gt; &lt;/saml2p:AuthnRequest&gt; 在实际请求中，还需要将SAMLReqeust进行Base64编码，上文示例的SAMLRequest进行Base64编码之后如下：
+fZFBT8JAEIXvJv6Hzd5pSwPWbigJSowkGhuoHryYpQywSTu77uwWfr6lYISYcJ158&#43;bNNyOSdRUbMfFui3P49kCO7esKSRw7GfcWhZakSKCsgYQrxWLy&#43;iLiIBLGaqdLXXE2IQLrlMZHjeRrsAuwjSrhff6S8a1zhkQY7na7gExQ6jo8uIeyJM6m7UqF8jB7qVSrc&#43;khIGdP2pbQhc34WlYEnM2mGf9K9k1rsF0ne282qa/0vcT&#43;ZrCENolEo9aNN62UckmkGvgbJvIwQ3ISXcbjqJ/2oqQXD4soFcNURHEwuEs&#43;OctPhz4oXCncXKeyPIpIPBdF3svfFgVnH2Cpu7AV8PHtDWOjDrDoEthz5tfN5S9oPv6PdRSem7ZrToXLB49/AA== 当服务提供方SP未登录时，需要跳转到认证提供方IDP的地址，进行身份验证操作，最终生成的URL如下所示：
+https://www.idp.com/saml/authn?SAMLRequest=fZFBT8JAEIXvJv6Hzd5pSwPWbigJSowkGhuoHryYpQywSTu77uwWfr6lYISYcJ158&#43;bNNyOSdRUbMfFui3P49kCO7esKSRw7GfcWhZakSKCsgYQrxWLy&#43;iLiIBLGaqdLXXE2IQLrlMZHjeRrsAuwjSrhff6S8a1zhkQY7na7gExQ6jo8uIeyJM6m7UqF8jB7qVSrc&#43;khIGdP2pbQhc34WlYEnM2mGf9K9k1rsF0ne282qa/0vcT&#43;ZrCENolEo9aNN62UckmkGvgbJvIwQ3ISXcbjqJ/2oqQXD4soFcNURHEwuEs&#43;OctPhz4oXCncXKeyPIpIPBdF3svfFgVnH2Cpu7AV8PHtDWOjDrDoEthz5tfN5S9oPv6PdRSem7ZrToXLB49/AA== SAMLResponse介绍 当IDP接受到服务提供方SP发起的SAMLRequest时，会在IDP的域内进行身份认证操作，完成登录行为之后，会携带当前登录的用户身份，发送SAMLResponse给到服务提供方SP。
+下面是一个SAMLResponse的XML示例:
+&lt;saml2p:Response xmlns:saml2p=&#34;urn:oasis:names:tc:SAML:2.0:protocol&#34; Destination=&#34;https://www.sp.com/saml/acs&#34; ID=&#34;_80ff50f0-73e9-4357-934e-15939aa197ae&#34; InResponseTo=&#34;_7xvtiohf7xupg9ulo8an1g4bemeranpifvup&#34; IssueInstant=&#34;2019-07-25T09:59:01.653Z&#34; Version=&#34;2.0&#34;&gt; &lt;saml2:Issuer xmlns:saml2=&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34;&gt;https://www.idp.com&lt;/saml2:Issuer&gt; &lt;saml2p:Status&gt; &lt;saml2p:StatusCode Value=&#34;urn:oasis:names:tc:SAML:2.0:status:Success&#34;/&gt; &lt;/saml2p:Status&gt; &lt;saml2:Assertion xmlns:saml2=&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34; ID=&#34;_ee51e413-cb8c-4cff-a833-8e5ab5a65712&#34; IssueInstant=&#34;2019-07-25T09:59:01.653Z&#34; Version=&#34;2.0&#34;&gt; &lt;saml2:Issuer&gt;https://www.idp.com&lt;/saml2:Issuer&gt; &lt;ds:Signature xmlns:ds=&#34;http://www.w3.org/2000/09/xmldsig#&#34;&gt; &lt;ds:SignedInfo&gt; &lt;ds:CanonicalizationMethod Algorithm=&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;/&gt; &lt;ds:SignatureMethod Algorithm=&#34;http://www." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/docs/protocol/saml2/" /><meta property="article:section" content="docs" />
+<meta property="article:published_time" content="2017-01-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2017-01-05T00:00:00+00:00" />
+<meta itemprop="name" content="SAML2协议">
+<meta itemprop="description" content="SAML，全称为Security Assertion Markup Language，是一种用于安全性断言的标记语言，目前的最新版本是2.0。
+它是一个基于XML的标准，用于在不同的安全域(security domain)之间交换认证和授权数据。SAML2.0可以帮助我们跨域实现单点登录。
+术语介绍 服务提供方(Service Provider，简称SP)，服务提供的实体。
+身份提供方（Identity Provider，简称IDP），身份提供的实体，包含对用户进行身份验证的能力。在SAML协议里，严格规范了IDP和SP之间传输的Token格式。
+SAML请求（SAMLRequest），由SP生成，发送给IDP的身份验证请求，所以一般也叫做AuthnRequest（Authentication Request）。
+SAML响应（SAMLResponse），由IDP生成，携带用户身份信息，发送给SP的身份验证结果，所以一般也叫做SAMLAssertion。
+服务提供方发起（SP-initiated），表示整个认证流程是由SP发起的，当客户直接访问SP的资源或网站时，跳转到IDP再跳转回来的过程，我们就称这个过程是SP-initiated的单点登录。
+认证提供方发起（IDP-initiated），表示整个认证流程是由IDP发起的，IDP直接提供SAML响应给到SP方，验证用户身份。
+SAML认证流程 下面介绍的是一个SP-initiated的完整认证流程，IDP-initiated可以理解为是SP-initiated的简化部分。
+用户打开SP地址。
+SP接收到请求之后，携带SAMLRequest请求到到IDP处（SAMLRequest的格式后面会给出）。
+IDP接收到SAMLRequest后，会在IDP验证用户身份，玉符统一身份会检查当前用户是否登录，如果未登录跳转登录页面。
+IDP验证身份通过后，会重定向到SP，携带SAMLResponse（SAMLResponse的格式后面会给出）。
+SP验证SAMLResponse，验证通过后取出SAMLResponse里携带的用户信息，访问对应的用户。
+SAMLRequest介绍 下面是一个SAMLRequest的XML示例:
+&lt;saml2p:AuthnRequest xmlns:saml2p=&#34;urn:oasis:names:tc:SAML:2.0:protocol&#34; AssertionConsumerServiceURL=&#34;https://www.sp.com/saml/acs&#34; Destination=&#34;https://www.idp.com/saml/authn&#34; ForceAuthn=&#34;false&#34; ID=&#34;_7xvtiohf7xupg9ulo8an1g4bemeranpifvup&#34; IsPassive=&#34;false&#34; IssueInstant=&#34;2019-07-25T09:59:02.467Z&#34; ProtocolBinding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&#34; Version=&#34;2.0&#34;&gt; &lt;saml2:Issuer xmlns:saml2=&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34;&gt;https://www.sp.com&lt;/saml2:Issuer&gt; &lt;/saml2p:AuthnRequest&gt; 在实际请求中，还需要将SAMLReqeust进行Base64编码，上文示例的SAMLRequest进行Base64编码之后如下：
+fZFBT8JAEIXvJv6Hzd5pSwPWbigJSowkGhuoHryYpQywSTu77uwWfr6lYISYcJ158&#43;bNNyOSdRUbMfFui3P49kCO7esKSRw7GfcWhZakSKCsgYQrxWLy&#43;iLiIBLGaqdLXXE2IQLrlMZHjeRrsAuwjSrhff6S8a1zhkQY7na7gExQ6jo8uIeyJM6m7UqF8jB7qVSrc&#43;khIGdP2pbQhc34WlYEnM2mGf9K9k1rsF0ne282qa/0vcT&#43;ZrCENolEo9aNN62UckmkGvgbJvIwQ3ISXcbjqJ/2oqQXD4soFcNURHEwuEs&#43;OctPhz4oXCncXKeyPIpIPBdF3svfFgVnH2Cpu7AV8PHtDWOjDrDoEthz5tfN5S9oPv6PdRSem7ZrToXLB49/AA== 当服务提供方SP未登录时，需要跳转到认证提供方IDP的地址，进行身份验证操作，最终生成的URL如下所示：
+https://www.idp.com/saml/authn?SAMLRequest=fZFBT8JAEIXvJv6Hzd5pSwPWbigJSowkGhuoHryYpQywSTu77uwWfr6lYISYcJ158&#43;bNNyOSdRUbMfFui3P49kCO7esKSRw7GfcWhZakSKCsgYQrxWLy&#43;iLiIBLGaqdLXXE2IQLrlMZHjeRrsAuwjSrhff6S8a1zhkQY7na7gExQ6jo8uIeyJM6m7UqF8jB7qVSrc&#43;khIGdP2pbQhc34WlYEnM2mGf9K9k1rsF0ne282qa/0vcT&#43;ZrCENolEo9aNN62UckmkGvgbJvIwQ3ISXcbjqJ/2oqQXD4soFcNURHEwuEs&#43;OctPhz4oXCncXKeyPIpIPBdF3svfFgVnH2Cpu7AV8PHtDWOjDrDoEthz5tfN5S9oPv6PdRSem7ZrToXLB49/AA== SAMLResponse介绍 当IDP接受到服务提供方SP发起的SAMLRequest时，会在IDP的域内进行身份认证操作，完成登录行为之后，会携带当前登录的用户身份，发送SAMLResponse给到服务提供方SP。
+下面是一个SAMLResponse的XML示例:
+&lt;saml2p:Response xmlns:saml2p=&#34;urn:oasis:names:tc:SAML:2.0:protocol&#34; Destination=&#34;https://www.sp.com/saml/acs&#34; ID=&#34;_80ff50f0-73e9-4357-934e-15939aa197ae&#34; InResponseTo=&#34;_7xvtiohf7xupg9ulo8an1g4bemeranpifvup&#34; IssueInstant=&#34;2019-07-25T09:59:01.653Z&#34; Version=&#34;2.0&#34;&gt; &lt;saml2:Issuer xmlns:saml2=&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34;&gt;https://www.idp.com&lt;/saml2:Issuer&gt; &lt;saml2p:Status&gt; &lt;saml2p:StatusCode Value=&#34;urn:oasis:names:tc:SAML:2.0:status:Success&#34;/&gt; &lt;/saml2p:Status&gt; &lt;saml2:Assertion xmlns:saml2=&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34; ID=&#34;_ee51e413-cb8c-4cff-a833-8e5ab5a65712&#34; IssueInstant=&#34;2019-07-25T09:59:01.653Z&#34; Version=&#34;2.0&#34;&gt; &lt;saml2:Issuer&gt;https://www.idp.com&lt;/saml2:Issuer&gt; &lt;ds:Signature xmlns:ds=&#34;http://www.w3.org/2000/09/xmldsig#&#34;&gt; &lt;ds:SignedInfo&gt; &lt;ds:CanonicalizationMethod Algorithm=&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;/&gt; &lt;ds:SignatureMethod Algorithm=&#34;http://www."><meta itemprop="datePublished" content="2017-01-05T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2017-01-05T00:00:00+00:00" />
+<meta itemprop="wordCount" content="126">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SAML2协议"/>
+<meta name="twitter:description" content="SAML，全称为Security Assertion Markup Language，是一种用于安全性断言的标记语言，目前的最新版本是2.0。
+它是一个基于XML的标准，用于在不同的安全域(security domain)之间交换认证和授权数据。SAML2.0可以帮助我们跨域实现单点登录。
+术语介绍 服务提供方(Service Provider，简称SP)，服务提供的实体。
+身份提供方（Identity Provider，简称IDP），身份提供的实体，包含对用户进行身份验证的能力。在SAML协议里，严格规范了IDP和SP之间传输的Token格式。
+SAML请求（SAMLRequest），由SP生成，发送给IDP的身份验证请求，所以一般也叫做AuthnRequest（Authentication Request）。
+SAML响应（SAMLResponse），由IDP生成，携带用户身份信息，发送给SP的身份验证结果，所以一般也叫做SAMLAssertion。
+服务提供方发起（SP-initiated），表示整个认证流程是由SP发起的，当客户直接访问SP的资源或网站时，跳转到IDP再跳转回来的过程，我们就称这个过程是SP-initiated的单点登录。
+认证提供方发起（IDP-initiated），表示整个认证流程是由IDP发起的，IDP直接提供SAML响应给到SP方，验证用户身份。
+SAML认证流程 下面介绍的是一个SP-initiated的完整认证流程，IDP-initiated可以理解为是SP-initiated的简化部分。
+用户打开SP地址。
+SP接收到请求之后，携带SAMLRequest请求到到IDP处（SAMLRequest的格式后面会给出）。
+IDP接收到SAMLRequest后，会在IDP验证用户身份，玉符统一身份会检查当前用户是否登录，如果未登录跳转登录页面。
+IDP验证身份通过后，会重定向到SP，携带SAMLResponse（SAMLResponse的格式后面会给出）。
+SP验证SAMLResponse，验证通过后取出SAMLResponse里携带的用户信息，访问对应的用户。
+SAMLRequest介绍 下面是一个SAMLRequest的XML示例:
+&lt;saml2p:AuthnRequest xmlns:saml2p=&#34;urn:oasis:names:tc:SAML:2.0:protocol&#34; AssertionConsumerServiceURL=&#34;https://www.sp.com/saml/acs&#34; Destination=&#34;https://www.idp.com/saml/authn&#34; ForceAuthn=&#34;false&#34; ID=&#34;_7xvtiohf7xupg9ulo8an1g4bemeranpifvup&#34; IsPassive=&#34;false&#34; IssueInstant=&#34;2019-07-25T09:59:02.467Z&#34; ProtocolBinding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&#34; Version=&#34;2.0&#34;&gt; &lt;saml2:Issuer xmlns:saml2=&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34;&gt;https://www.sp.com&lt;/saml2:Issuer&gt; &lt;/saml2p:AuthnRequest&gt; 在实际请求中，还需要将SAMLReqeust进行Base64编码，上文示例的SAMLRequest进行Base64编码之后如下：
+fZFBT8JAEIXvJv6Hzd5pSwPWbigJSowkGhuoHryYpQywSTu77uwWfr6lYISYcJ158&#43;bNNyOSdRUbMfFui3P49kCO7esKSRw7GfcWhZakSKCsgYQrxWLy&#43;iLiIBLGaqdLXXE2IQLrlMZHjeRrsAuwjSrhff6S8a1zhkQY7na7gExQ6jo8uIeyJM6m7UqF8jB7qVSrc&#43;khIGdP2pbQhc34WlYEnM2mGf9K9k1rsF0ne282qa/0vcT&#43;ZrCENolEo9aNN62UckmkGvgbJvIwQ3ISXcbjqJ/2oqQXD4soFcNURHEwuEs&#43;OctPhz4oXCncXKeyPIpIPBdF3svfFgVnH2Cpu7AV8PHtDWOjDrDoEthz5tfN5S9oPv6PdRSem7ZrToXLB49/AA== 当服务提供方SP未登录时，需要跳转到认证提供方IDP的地址，进行身份验证操作，最终生成的URL如下所示：
+https://www.idp.com/saml/authn?SAMLRequest=fZFBT8JAEIXvJv6Hzd5pSwPWbigJSowkGhuoHryYpQywSTu77uwWfr6lYISYcJ158&#43;bNNyOSdRUbMfFui3P49kCO7esKSRw7GfcWhZakSKCsgYQrxWLy&#43;iLiIBLGaqdLXXE2IQLrlMZHjeRrsAuwjSrhff6S8a1zhkQY7na7gExQ6jo8uIeyJM6m7UqF8jB7qVSrc&#43;khIGdP2pbQhc34WlYEnM2mGf9K9k1rsF0ne282qa/0vcT&#43;ZrCENolEo9aNN62UckmkGvgbJvIwQ3ISXcbjqJ/2oqQXD4soFcNURHEwuEs&#43;OctPhz4oXCncXKeyPIpIPBdF3svfFgVnH2Cpu7AV8PHtDWOjDrDoEthz5tfN5S9oPv6PdRSem7ZrToXLB49/AA== SAMLResponse介绍 当IDP接受到服务提供方SP发起的SAMLRequest时，会在IDP的域内进行身份认证操作，完成登录行为之后，会携带当前登录的用户身份，发送SAMLResponse给到服务提供方SP。
+下面是一个SAMLResponse的XML示例:
+&lt;saml2p:Response xmlns:saml2p=&#34;urn:oasis:names:tc:SAML:2.0:protocol&#34; Destination=&#34;https://www.sp.com/saml/acs&#34; ID=&#34;_80ff50f0-73e9-4357-934e-15939aa197ae&#34; InResponseTo=&#34;_7xvtiohf7xupg9ulo8an1g4bemeranpifvup&#34; IssueInstant=&#34;2019-07-25T09:59:01.653Z&#34; Version=&#34;2.0&#34;&gt; &lt;saml2:Issuer xmlns:saml2=&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34;&gt;https://www.idp.com&lt;/saml2:Issuer&gt; &lt;saml2p:Status&gt; &lt;saml2p:StatusCode Value=&#34;urn:oasis:names:tc:SAML:2.0:status:Success&#34;/&gt; &lt;/saml2p:Status&gt; &lt;saml2:Assertion xmlns:saml2=&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34; ID=&#34;_ee51e413-cb8c-4cff-a833-8e5ab5a65712&#34; IssueInstant=&#34;2019-07-25T09:59:01.653Z&#34; Version=&#34;2.0&#34;&gt; &lt;saml2:Issuer&gt;https://www.idp.com&lt;/saml2:Issuer&gt; &lt;ds:Signature xmlns:ds=&#34;http://www.w3.org/2000/09/xmldsig#&#34;&gt; &lt;ds:SignedInfo&gt; &lt;ds:CanonicalizationMethod Algorithm=&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;/&gt; &lt;ds:SignatureMethod Algorithm=&#34;http://www."/>
+
+
+
+
+<link rel="preload" href="/scss/main.min.58eed10dc2a85f518e534c2f65b4356b1554725cc7015550449f5645d6b269e1.css" as="style">
+<link href="/scss/main.min.58eed10dc2a85f518e534c2f65b4356b1554725cc7015550449f5645d6b269e1.css" rel="stylesheet" integrity="">
+
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
+  crossorigin="anonymous"></script>
+
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"></span><span class="navbar-brand__name">Authsaur</span></a>
+  <div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+    <ul class="navbar-nav mt-2 mt-lg-0">
+      <li class="nav-item mr-4 mb-2 mb-lg-0">
+        <a class="nav-link active" href="/docs/"><span class="active">文档</span></a>
+      </li>
+      <li class="nav-item mr-4 mb-2 mb-lg-0">
+        <a class="nav-link" href="/connect/"><span>应用集成</span></a>
+      </li>
+      <li class="nav-item mr-4 mb-2 mb-lg-0">
+        <a class="nav-link" href="https://github.com/authsaur/" target="_blank"><i class='fa-brands fa-github'></i><span>GitHub</span></a>
+      </li>
+      <li class="nav-item mr-4 mb-2 mb-lg-0">
+        <a class="nav-link" href="/about/"><span>关于</span></a>
+      </li>
+      </ul>
+  </div>
+  <div class="navbar-nav d-none d-lg-block">
+    
+  </div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            
+<div id="td-sidebar-menu" class="td-sidebar__inner">
+  <div id="content-mobile">
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type="button" data-toggle="collapse" data-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  </div>
+  <div id="content-desktop"></div>
+  <nav class="collapse td-sidebar-nav" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pr-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-docs-li">
+  <a href="/docs/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-docs"><span class="">文档</span></a>
+  <ul class="ul-1">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docswhat-li">
+  <a href="/docs/what/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-docswhat"><span class="">什么是Authsaur</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsdeploy-li">
+  <a href="/docs/deploy/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-docsdeploy"><span class="">安装部署</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsconsole-li">
+  <a href="/docs/console/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-docsconsole"><span class="">控制台</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsguide-li">
+  <a href="/docs/guide/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-docsguide"><span class="">快速使用</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsguideaddaccount-li">
+  <a href="/docs/guide/addaccount/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-docsguideaddaccount"><span class="">创建用户</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsguideaddapp-li">
+  <a href="/docs/guide/addapp/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-docsguideaddapp"><span class="">创建应用</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsguideaddauth-li">
+  <a href="/docs/guide/addauth/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-docsguideaddauth"><span class="">创建认证器</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsguideaddauthor-li">
+  <a href="/docs/guide/addauthor/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-docsguideaddauthor"><span class="">创建授权</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsguidemfa-li">
+  <a href="/docs/guide/mfa/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-docsguidemfa"><span class="">双因素认证</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsguidedingtalk-li">
+  <a href="/docs/guide/dingtalk/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-docsguidedingtalk"><span class="">钉钉扫码认证</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-docsprotocol-li">
+  <a href="/docs/protocol/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-docsprotocol"><span class="">概念和协议</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsprotocolcas2-li">
+  <a href="/docs/protocol/cas2/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-docsprotocolcas2"><span class="">CAS2协议</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsprotocoloidc-li">
+  <a href="/docs/protocol/oidc/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-docsprotocoloidc"><span class="">OIDC和OAuth2协议</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-docsprotocolsaml2-li">
+  <a href="/docs/protocol/saml2/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-docsprotocolsaml2"><span class="td-sidebar-nav-active-item">SAML2协议</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsprotocolldap-li">
+  <a href="/docs/protocol/ldap/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-docsprotocolldap"><span class="">理解LDAP</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsprotocolauthenauthor-li">
+  <a href="/docs/protocol/authenauthor/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-docsprotocolauthenauthor"><span class="">认证和授权</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsha-li">
+  <a href="/docs/ha/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-docsha"><span class="">高可用集群</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsbuild-li">
+  <a href="/docs/build/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-docsbuild"><span class="">源码构建</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsdeveloper-li">
+  <a href="/docs/developer/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-docsdeveloper"><span class="">开发者</span></a>
+</li>
+  </ul>
+</li>
+    </ul>
+  </nav>
+</div>
+
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            
+<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+
+</div>
+
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#术语介绍">术语介绍</a></li>
+    <li><a href="#saml认证流程">SAML认证流程</a></li>
+    <li><a href="#samlrequest介绍">SAMLRequest介绍</a></li>
+    <li><a href="#samlresponse介绍">SAMLResponse介绍</a></li>
+    <li><a href="#saml如何保证响应的有效性">SAML如何保证响应的有效性</a></li>
+  </ul>
+</nav>
+      </div>
+    
+            
+
+	
+		
+			
+				
+			
+			
+
+
+
+		
+			
+				
+			
+			
+
+
+
+		
+	
+
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
+            
+  
+
+            
+            
+<div class="td-content">
+	<h1>SAML2协议</h1>
+	
+	<header class="article-meta">
+		
+
+  
+    
+      
+
+
+    
+      
+
+
+    
+  
+
+		
+	</header>    
+	<p>SAML，全称为Security Assertion Markup Language，是一种用于安全性断言的标记语言，目前的最新版本是2.0。</p>
+<p>它是一个基于XML的标准，用于在不同的安全域(security domain)之间交换认证和授权数据。SAML2.0可以帮助我们跨域实现单点登录。</p>
+<h2 id="术语介绍">术语介绍</h2>
+<ul>
+<li>
+<p>服务提供方(Service Provider，简称SP)，服务提供的实体。</p>
+</li>
+<li>
+<p>身份提供方（Identity Provider，简称IDP），身份提供的实体，包含对用户进行身份验证的能力。在SAML协议里，严格规范了IDP和SP之间传输的Token格式。</p>
+</li>
+<li>
+<p>SAML请求（SAMLRequest），由SP生成，发送给IDP的身份验证请求，所以一般也叫做AuthnRequest（Authentication Request）。</p>
+</li>
+<li>
+<p>SAML响应（SAMLResponse），由IDP生成，携带用户身份信息，发送给SP的身份验证结果，所以一般也叫做SAMLAssertion。</p>
+</li>
+<li>
+<p>服务提供方发起（SP-initiated），表示整个认证流程是由SP发起的，当客户直接访问SP的资源或网站时，跳转到IDP再跳转回来的过程，我们就称这个过程是SP-initiated的单点登录。</p>
+</li>
+<li>
+<p>认证提供方发起（IDP-initiated），表示整个认证流程是由IDP发起的，IDP直接提供SAML响应给到SP方，验证用户身份。</p>
+</li>
+</ul>
+<h2 id="saml认证流程">SAML认证流程</h2>
+<p>下面介绍的是一个SP-initiated的完整认证流程，IDP-initiated可以理解为是SP-initiated的简化部分。</p>
+<p><img src="/images/common/saml.png" alt=""></p>
+<ol>
+<li>
+<p>用户打开SP地址。</p>
+</li>
+<li>
+<p>SP接收到请求之后，携带SAMLRequest请求到到IDP处（SAMLRequest的格式后面会给出）。</p>
+</li>
+<li>
+<p>IDP接收到SAMLRequest后，会在IDP验证用户身份，玉符统一身份会检查当前用户是否登录，如果未登录跳转登录页面。</p>
+</li>
+<li>
+<p>IDP验证身份通过后，会重定向到SP，携带SAMLResponse（SAMLResponse的格式后面会给出）。</p>
+</li>
+<li>
+<p>SP验证SAMLResponse，验证通过后取出SAMLResponse里携带的用户信息，访问对应的用户。</p>
+</li>
+</ol>
+<h2 id="samlrequest介绍">SAMLRequest介绍</h2>
+<p>下面是一个SAMLRequest的XML示例:</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#268bd2">&lt;saml2p:AuthnRequest</span> xmlns:saml2p=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:2.0:protocol&#34;</span> AssertionConsumerServiceURL=<span style="color:#2aa198">&#34;https://www.sp.com/saml/acs&#34;</span> Destination=<span style="color:#2aa198">&#34;https://www.idp.com/saml/authn&#34;</span> ForceAuthn=<span style="color:#2aa198">&#34;false&#34;</span> ID=<span style="color:#2aa198">&#34;_7xvtiohf7xupg9ulo8an1g4bemeranpifvup&#34;</span> IsPassive=<span style="color:#2aa198">&#34;false&#34;</span> IssueInstant=<span style="color:#2aa198">&#34;2019-07-25T09:59:02.467Z&#34;</span> ProtocolBinding=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&#34;</span> Version=<span style="color:#2aa198">&#34;2.0&#34;</span><span style="color:#268bd2">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">&lt;saml2:Issuer</span> xmlns:saml2=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34;</span><span style="color:#268bd2">&gt;</span>https://www.sp.com<span style="color:#268bd2">&lt;/saml2:Issuer&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">&lt;/saml2p:AuthnRequest&gt;</span>
+</span></span></code></pre></div><p>在实际请求中，还需要将SAMLReqeust进行Base64编码，上文示例的SAMLRequest进行Base64编码之后如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>fZFBT8JAEIXvJv6Hzd5pSwPWbigJSowkGhuoHryYpQywSTu77uwWfr6lYISYcJ158+bNNyOSdRUbMfFui3P49kCO7esKSRw7GfcWhZakSKCsgYQrxWLy+iLiIBLGaqdLXXE2IQLrlMZHjeRrsAuwjSrhff6S8a1zhkQY7na7gExQ6jo8uIeyJM6m7UqF8jB7qVSrc+khIGdP2pbQhc34WlYEnM2mGf9K9k1rsF0ne282qa/0vcT+ZrCENolEo9aNN62UckmkGvgbJvIwQ3ISXcbjqJ/2oqQXD4soFcNURHEwuEs+OctPhz4oXCncXKeyPIpIPBdF3svfFgVnH2Cpu7AV8PHtDWOjDrDoEthz5tfN5S9oPv6PdRSem7ZrToXLB49/AA==
+</span></span></code></pre></div><p>当服务提供方SP未登录时，需要跳转到认证提供方IDP的地址，进行身份验证操作，最终生成的URL如下所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>https://www.idp.com/saml/authn?SAMLRequest=fZFBT8JAEIXvJv6Hzd5pSwPWbigJSowkGhuoHryYpQywSTu77uwWfr6lYISYcJ158+bNNyOSdRUbMfFui3P49kCO7esKSRw7GfcWhZakSKCsgYQrxWLy+iLiIBLGaqdLXXE2IQLrlMZHjeRrsAuwjSrhff6S8a1zhkQY7na7gExQ6jo8uIeyJM6m7UqF8jB7qVSrc+khIGdP2pbQhc34WlYEnM2mGf9K9k1rsF0ne282qa/0vcT+ZrCENolEo9aNN62UckmkGvgbJvIwQ3ISXcbjqJ/2oqQXD4soFcNURHEwuEs+OctPhz4oXCncXKeyPIpIPBdF3svfFgVnH2Cpu7AV8PHtDWOjDrDoEthz5tfN5S9oPv6PdRSem7ZrToXLB49/AA==
+</span></span></code></pre></div><h2 id="samlresponse介绍">SAMLResponse介绍</h2>
+<p>当IDP接受到服务提供方SP发起的SAMLRequest时，会在IDP的域内进行身份认证操作，完成登录行为之后，会携带当前登录的用户身份，发送SAMLResponse给到服务提供方SP。</p>
+<p>下面是一个SAMLResponse的XML示例:</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#268bd2">&lt;saml2p:Response</span> xmlns:saml2p=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:2.0:protocol&#34;</span> Destination=<span style="color:#2aa198">&#34;https://www.sp.com/saml/acs&#34;</span> ID=<span style="color:#2aa198">&#34;_80ff50f0-73e9-4357-934e-15939aa197ae&#34;</span> InResponseTo=<span style="color:#2aa198">&#34;_7xvtiohf7xupg9ulo8an1g4bemeranpifvup&#34;</span> IssueInstant=<span style="color:#2aa198">&#34;2019-07-25T09:59:01.653Z&#34;</span> Version=<span style="color:#2aa198">&#34;2.0&#34;</span><span style="color:#268bd2">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">&lt;saml2:Issuer</span> xmlns:saml2=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34;</span><span style="color:#268bd2">&gt;</span>https://www.idp.com<span style="color:#268bd2">&lt;/saml2:Issuer&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">&lt;saml2p:Status&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">&lt;saml2p:StatusCode</span> Value=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:2.0:status:Success&#34;</span><span style="color:#268bd2">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">&lt;/saml2p:Status&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">&lt;saml2:Assertion</span> xmlns:saml2=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34;</span> ID=<span style="color:#2aa198">&#34;_ee51e413-cb8c-4cff-a833-8e5ab5a65712&#34;</span> IssueInstant=<span style="color:#2aa198">&#34;2019-07-25T09:59:01.653Z&#34;</span> Version=<span style="color:#2aa198">&#34;2.0&#34;</span><span style="color:#268bd2">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">&lt;saml2:Issuer&gt;</span>https://www.idp.com<span style="color:#268bd2">&lt;/saml2:Issuer&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">&lt;ds:Signature</span> xmlns:ds=<span style="color:#2aa198">&#34;http://www.w3.org/2000/09/xmldsig#&#34;</span><span style="color:#268bd2">&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">&lt;ds:SignedInfo&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;ds:CanonicalizationMethod</span> Algorithm=<span style="color:#2aa198">&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;</span><span style="color:#268bd2">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;ds:SignatureMethod</span> Algorithm=<span style="color:#2aa198">&#34;http://www.w3.org/2000/09/xmldsig#rsa-sha1&#34;</span><span style="color:#268bd2">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;ds:Reference</span> URI=<span style="color:#2aa198">&#34;#_ee51e413-cb8c-4cff-a833-8e5ab5a65712&#34;</span><span style="color:#268bd2">&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#268bd2">&lt;ds:Transforms&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#268bd2">&lt;ds:Transform</span> Algorithm=<span style="color:#2aa198">&#34;http://www.w3.org/2000/09/xmldsig#enveloped-signature&#34;</span><span style="color:#268bd2">/&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#268bd2">&lt;ds:Transform</span> Algorithm=<span style="color:#2aa198">&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;</span><span style="color:#268bd2">/&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#268bd2">&lt;/ds:Transforms&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#268bd2">&lt;ds:DigestMethod</span> Algorithm=<span style="color:#2aa198">&#34;http://www.w3.org/2000/09/xmldsig#sha1&#34;</span><span style="color:#268bd2">/&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#268bd2">&lt;ds:DigestValue&gt;</span>SeLenKpDFTFSrd4RodgCxUbXi1I=<span style="color:#268bd2">&lt;/ds:DigestValue&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;/ds:Reference&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">&lt;/ds:SignedInfo&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">&lt;ds:SignatureValue&gt;</span>fEN31jRzjpGPSFEazXSYIu8mlhSrB/2rhlGmkQw8vbgUlHveU4BfX91knG11yF4HcLd5686WYWCS9P9szLvcxuQlVi1z5NiIFs967Z3hCZuU6mP86/5qEJVOVeUnaS39YtP8Jwxoev2d4QJjJ0+9+9ifOQkf4bhM+9b8Q1/3A5Q4xqjvArHTwGQMnjpi5hJQprkreChvNXGu3vemzHb5HEGkQHsbwavuA65VDwQ3sxdQbbDjQrXMIZWlKt51IXHhDVrlCwVIDXPCrN1e3wJrkLPitAUbhDCcRdVvmc8a5lcmvX4SkDn7PwzmFAf1rXACCyvKft5YycYnN7zHkymLCA==<span style="color:#268bd2">&lt;/ds:SignatureValue&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">&lt;ds:KeyInfo&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;ds:X509Data&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#268bd2">&lt;ds:X509SubjectName&gt;</span>C=CN,L=Beijing,CN=com,CN=yufuid<span style="color:#268bd2">&lt;/ds:X509SubjectName&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#268bd2">&lt;ds:X509Certificate&gt;</span>MIIC/DCCAeSgAwIBAgIIBjRkHLoMipUwDQYJKoZIhvcNAQEFBQAwPjEPMA0GA1UEAwwGeXVmdWlkMQwwCgYDVQQDDANjb20xEDAOBgNVBAcMB0JlaWppbmcxCzAJBgNVBAYTAkNOMB4XDTE5MDcyMzEwNDA1NloXDTIwMDcyMjEwNDA1NlowPjEPMA0GA1UEAwwGeXVmdWlkMQwwCgYDVQQDDANjb20xEDAOBgNVBAcMB0JlaWppbmcxCzAJBgNVBAYTAkNOMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0dk/S9XEiBio3CRccVIsjFX4KBGZPfz47jrm9TF1v3t+7Cy7WkYD6EW/rQYi7ORfRTVx8m8UsiB04MjwHARtVdDPP9COxfjkVp5h5nQv1P6WYtZjIFDiIBbS0of1YmeHzCixxGQDk+PL/M19aey9DoRVg9MjcQYppjoiYbJhqj/YL2kCO5QgaquPptBCVKcMpqE1BCggPLyH3M1V7/QJXzRKBs/iOO/3yUnapftK/ysZeWMZ2hEGlB/AW3OP9pO2vijONqxbHqTFyngyYof+QRl7F5KsmZNP5Pd6SoYo0MtrEsDVIchdx9Mb1iCLZfiHqbq8s4mr7+alvuyBE1lW+QIDAQABMA0GCSqGSIb3DQEBBQUAA4IBAQAdz05eOepSmE+IFMdwLkkD5oDBBwC16ie5BpXBxFAYxEYrQ8sZPmjTIhG+tQe3lnkxmrgyPbq1pevybGl3aR9dPWysg3ps2pK+pJQt6aRHQbNhy+fFT4uqZzVXy/61LPt8OhhhzjGVoApIh53A4OuffV2B1PueBChjrrKEZGHk5iVuzv1kEtGu0NIKbTXBcG7ZfX+2pKYYKw3AKllFDSBL/ePFjUh5iXJWwwGflqwtQjmZYZt4k+UMDIW7L6r5FlDNc4JGjH1gWOXpCZ6EkGR1rAmK2Fnv1/5LTRVYrMlGYlCx29DhM7GVnpgfTmua15E3dW+WyS4TOM8UnjavAIBa<span style="color:#268bd2">&lt;/ds:X509Certificate&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;/ds:X509Data&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">&lt;/ds:KeyInfo&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">&lt;/ds:Signature&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">&lt;saml2:Subject&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">&lt;saml2:NameID</span> Format=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified&#34;</span><span style="color:#268bd2">&gt;</span>sanzhang<span style="color:#268bd2">&lt;/saml2:NameID&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">&lt;saml2:SubjectConfirmation</span> Method=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:2.0:cm:bearer&#34;</span><span style="color:#268bd2">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;saml2:SubjectConfirmationData</span> InResponseTo=<span style="color:#2aa198">&#34;_7xvtiohf7xupg9ulo8an1g4bemeranpifvup&#34;</span> NotOnOrAfter=<span style="color:#2aa198">&#34;2019-07-25T10:04:01.647Z&#34;</span> Recipient=<span style="color:#2aa198">&#34;https://www.sp.com/saml/acs&#34;</span><span style="color:#268bd2">/&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">&lt;/saml2:SubjectConfirmation&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">&lt;/saml2:Subject&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">&lt;saml2:Conditions</span> NotBefore=<span style="color:#2aa198">&#34;2019-07-25T09:54:01.647Z&#34;</span> NotOnOrAfter=<span style="color:#2aa198">&#34;2019-07-25T10:04:01.647Z&#34;</span><span style="color:#268bd2">&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">&lt;saml2:AudienceRestriction&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;saml2:Audience&gt;</span>https://www.sp.com<span style="color:#268bd2">&lt;/saml2:Audience&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">&lt;/saml2:AudienceRestriction&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">&lt;/saml2:Conditions&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">&lt;saml2:AuthnStatement</span> AuthnInstant=<span style="color:#2aa198">&#34;2019-07-25T09:59:01.653Z&#34;</span><span style="color:#268bd2">&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">&lt;saml2:AuthnContext&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;saml2:AuthnContextClassRef&gt;</span>urn:oasis:names:tc:SAML:2.0:ac:classes:Password<span style="color:#268bd2">&lt;/saml2:AuthnContextClassRef&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">&lt;/saml2:AuthnContext&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">&lt;/saml2:AuthnStatement&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">&lt;/saml2:Assertion&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">&lt;/saml2p:Response&gt;</span>
+</span></span></code></pre></div><p>这里的参数比较多，就不一一介绍了，只标记几个关键字段进行解释：</p>
+<ul>
+<li>
+<p>这里的Destination其实表示的是服务提供方SP接收SAML响应的地址，如示例的 <a href="https://www.sp.com/saml/acs">https://www.sp.com/saml/acs</a> 。注意一定要跟SAMLRequest里的Destination区分开来。</p>
+</li>
+<li>
+<p>NameID表示登录的用户身份，这里的响应表示登录的用户为sanzhang。</p>
+</li>
+<li>
+<p>SAMLResponse是会指定有效期的，用NotBefore和NotOnOfAfter进行表示，上述示例中，该响应的有效期为2019年7月25日9点54分到2019年7月25日10点54分（北京时间需要增加八小时）。</p>
+</li>
+</ul>
+<h2 id="saml如何保证响应的有效性">SAML如何保证响应的有效性</h2>
+<p>身份提供方IDP需要生成密钥对，用密钥对生成配套的证书，并将证书给到服务提供方SP。SP需要存储证书，当IDP签发SAMLResponse时，会对Response响应进行签名，当SP接受到IDP签发的SAMLResponse时，需要用证书校验签名的有效性。</p>
+
+	
+	
+	
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      
+<footer class="bg-dark py-5 row d-print-none footer-margin-0">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="User mailing list" aria-label="User mailing list">
+    <a class="text-white" target="_blank" rel="noopener noreferrer" href="mailto:sayi@163.com">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="GitHub" aria-label="GitHub">
+    <a class="text-white" target="_blank" rel="noopener noreferrer" href="https://github.com/authsaur">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">&copy; 2023 authsaur.deepoove.com copyright 保留所有权利</small>
+        
+	
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+
+
+
+    </div>
+    <script src="/js/main.min.be25a680a0d95dc8b5d6664622e2134aa894220e2f224ef609e00f633a3a1b32.js" integrity="sha256-viWmgKDZXci11mZGIuITSqiUIg4vIk72CeAPYzo6GzI=" crossorigin="anonymous"></script>
+<script src='/js/tabpane-persist.js'></script>
+
+  </body>
+</html>
