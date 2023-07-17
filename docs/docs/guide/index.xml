@@ -1,0 +1,277 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Authsaur – 快速使用</title>
+    <link>/docs/guide/</link>
+    <description>Recent content in 快速使用 on Authsaur</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 05 Jan 2017 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/docs/guide/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: 创建用户</title>
+      <link>/docs/guide/addaccount/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/guide/addaccount/</guid>
+      <description>
+        
+        
+        
+
+&lt;div class=&#34;pageinfo pageinfo-primary&#34;&gt;
+&lt;p&gt;Authsaur内置密码登录认证器，可以在1分钟内创建用户。&lt;/p&gt;
+
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;点击菜单【用户】，进入我的企业&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/user-list.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;点击按钮【创建用户】，密码默认规则：8-10位，至少包含大小写字母、数字和特殊字符。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/user-add.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用户创建成功&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 创建应用</title>
+      <link>/docs/guide/addapp/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/guide/addapp/</guid>
+      <description>
+        
+        
+        
+
+&lt;div class=&#34;pageinfo pageinfo-primary&#34;&gt;
+&lt;p&gt;Authsaur提供了应用市场快速集成应用，也可以在3分钟内创建标准协议应用。&lt;/p&gt;
+&lt;p&gt;注意： 第三方应用需要配置才能接入Authsaur进行认证和单点登录，请参考CAS官方文档。&lt;/p&gt;
+
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;点击菜单【应用】，点击按钮【创建应用】&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/app-list.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;选择标准协议，这里选择OAuth2协议&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/app-protocol.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;填写OAuth2应用信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/app-oauth.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+
+
+&lt;div class=&#34;alert alert-primary&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;注意&lt;/h4&gt;
+
+    访问地址的规则参考CAS的serviceId：描述应用的正则表URL达式，尝试将表达式与整个请求的URL进行匹配，并在定义的模式的开头添加^和结尾隐式添加$，这意味着它不会查找子字符串匹配。
+
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;应用创建成功
+OAuth2应用的登录地址为：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://{authsaur_ip}/oauth2.0/authorize?client_id=demo-id&amp;amp;response_type=code&amp;amp;redirect_uri=http://127.0.0.1:8090
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 创建认证器</title>
+      <link>/docs/guide/addauth/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/guide/addauth/</guid>
+      <description>
+        
+        
+        
+
+&lt;div class=&#34;pageinfo pageinfo-primary&#34;&gt;
+&lt;p&gt;Authsaur支持插件化认证器，可以在3分钟内创建LDAP认证器。&lt;/p&gt;
+
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;点击菜单【认证】，点击按钮【创建认证器】&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/auth-list.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;选择LDAP认证器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/auth-add.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;填写LDAP信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/auth-ldap.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;认证器创建成功，LDAP身份源会自动创建。&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 创建授权</title>
+      <link>/docs/guide/addauthor/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/guide/addauthor/</guid>
+      <description>
+        
+        
+        
+
+&lt;div class=&#34;pageinfo pageinfo-primary&#34;&gt;
+&lt;p&gt;Authsaur默认应用对所有人授权，可以在1分钟内允许指定用户访问。&lt;/p&gt;
+
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;点击菜单【权限】，选择应用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/author-list.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;点击按钮【添加用户授权】，选择指定用户。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/author-add.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;指定用户授权成功，其它用户无权访问。&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 双因素认证</title>
+      <link>/docs/guide/mfa/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/guide/mfa/</guid>
+      <description>
+        
+        
+        
+
+&lt;div class=&#34;pageinfo pageinfo-primary&#34;&gt;
+&lt;p&gt;Authsaur非常简单，2分钟即可学会使用双因素认证。&lt;/p&gt;
+
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;点击菜单【认证】，点击按钮【创建认证器】，选择OTP口令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/otp-add.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+
+
+&lt;div class=&#34;alert alert-primary&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;说明&lt;/h4&gt;
+
+    &lt;ul&gt;
+&lt;li&gt;签发者、标签会在提供MFA功能的手机应用程序中显示&lt;/li&gt;
+&lt;li&gt;触发认证器提供MFA触发的条件，比如密码登录触发，钉钉扫码不触发&lt;/li&gt;
+&lt;li&gt;开启可信设备后，OTP认证通过的设备后续不再要求输入OTP&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;登录Authsaur后，扫码输入一次口令，注册安全设备&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/otp-register.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;再次输入口令，进行双因素认证&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/otp-login.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;双因素认证一切就绪。&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 钉钉扫码认证</title>
+      <link>/docs/guide/dingtalk/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/guide/dingtalk/</guid>
+      <description>
+        
+        
+        
+
+&lt;div class=&#34;pageinfo pageinfo-primary&#34;&gt;
+&lt;p&gt;对于使用钉钉作为协同办公的企业来说，让Authsaur支持钉钉认证，就等于让钉钉认证体系打通了企业所有应用系统（扫码认证），并且在钉钉APP内访问应用时自动实现SSO（钉钉H5微应用）。&lt;/p&gt;
+
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;点击菜单【认证】，点击按钮【创建认证器】，选择钉钉&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/dingtalk-add.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+
+
+&lt;div class=&#34;alert alert-primary&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;说明&lt;/h4&gt;
+
+    &lt;ul&gt;
+&lt;li&gt;AppKey：钉钉后台创建H5微应用后获得&lt;/li&gt;
+&lt;li&gt;AppSecret：钉钉后台创建H5微应用后获得&lt;/li&gt;
+&lt;li&gt;CorpID：非必填，如果需要钉钉APP内自动认证必填，钉钉后台首页获得&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;登录钉钉管理后台，创建H5微应用，记录下 AppKey，AppSecret。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/dingtalk-admin-create.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;钉钉管理后台，进入【登录与分享设置】,设置Authsaur回调地址&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/dingtalk-admin-login.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;钉钉管理后台，进入【权限管理】&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/images/dingtalk-admin-author.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- 个人手机号信息	
+- 通讯录个人信息读权限	
+- 调用SNS API时需要具备的基本权限	
+- 企业员工手机号信息	
+- 邮箱等个人信息	
+- 通讯录部门信息读权限	
+- 成员信息读权限	
+- 根据手机号姓名获取成员信息的接口访问权限	
+- 通讯录部门成员读权限	
+- 调用企业API基础权限
+- 调用OpenApp专有API时需要具备的权限
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;钉钉认证一切就绪，钉钉身份源会自动创建。&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,430 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Authsaur – 概念和协议</title>
+    <link>/docs/protocol/</link>
+    <description>Recent content in 概念和协议 on Authsaur</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 05 Jan 2017 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/docs/protocol/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: CAS2协议</title>
+      <link>/docs/protocol/cas2/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/protocol/cas2/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;cas-协议简介&#34;&gt;CAS 协议简介&lt;/h2&gt;
+&lt;p&gt;在CAS 协议中，涉及到两个主体。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CAS Server： CAS服务，身份认证提供方。&lt;/li&gt;
+&lt;li&gt;CAS Client： CAS客户端，资源提供方，如第三方应用。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这两个主体通过用户浏览器进行信息交换。方式上，比如CAS Client可以返回带参数的重定向，将信息转发给CAS Server。登录验证成功后CAS Server会返回CAS Client一个包含用户信息的XML， CAS Client验证用户信息后会返回给用户访问资源。&lt;/p&gt;
+&lt;h2 id=&#34;cas-流程&#34;&gt;CAS 流程&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/cas.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;用户试图登录CAS Client提供的应用。&lt;/li&gt;
+&lt;li&gt;CAS Client会分析该请求的Http请求中是否包含认证票据ST，如果没有，则说明当前用户尚未认证，于是重定向CAS Server，并传递Service （也就是要访问的目的资源地址）。&lt;/li&gt;
+&lt;li&gt;用户输入认证信息，如果登录成功，CAS Server随机产生一个相当长度、唯一、不可伪造的票据ST，然后附带生成的ST重定向到CAS client。&lt;/li&gt;
+&lt;li&gt;CAS Client在拿到Service和新产生的ST过后，通过后台与CAS Server进行交互验证。&lt;/li&gt;
+&lt;li&gt;CAS Server根据请求参数Service和ST进行身份核实，以确保ST的合法性，并返回一段指定格式的XML（包含用户信息）给CAS Client。&lt;/li&gt;
+&lt;li&gt;CAS Client和CAS Server之间完成了一个对用户的身份核实，返回给用户CAS Client访问资源。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;cas-uris&#34;&gt;CAS URIs&lt;/h2&gt;
+&lt;p&gt;CAS 是一种基于 HTTP[2,3] 的协议，要求其每个组件都可以通过特定的 URI 进行访问。&lt;/p&gt;
+&lt;h3 id=&#34;login&#34;&gt;/login&lt;/h3&gt;
+&lt;p&gt;当/login充当凭证请求者时，可以将以下 HTTP 请求参数传递给/login。它们都区分大小写。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;service [OPTIONAL]- 客户端尝试访问的应用程序的标识符。在几乎所有情况下，这都是应用程序的 URL。请注意，作为 HTTP 请求参数，此 URL 值必须进行 URL 编码，如 RFC 1738 [4] 的第 2.2 节中所述。如果未指定服务并且单点登录会话尚不存在，CAS 应向用户请求凭据以启动单点登录会话。如果未指定服务并且单点登录会话已存在，CAS 应显示一条消息，通知客户端它已登录。&lt;/li&gt;
+&lt;li&gt;renew [OPTIONAL]- 如果设置此参数，将绕过单点登录。在这种情况下，无论是否存在与 CAS 的单点登录会话，CAS 都将要求客户端提供凭据。该参数与“gateway”参数不兼容。重定向到/login URI 的服务和发布到/login URI 的登录表单视图不应同时设置“更新”和“网关”请求参数。如果两者都设置了，则行为未定义。如果设置了“更新”，建议 CAS 实现忽略“网关”参数。建议设置renew参数时，其值为“true”。&lt;/li&gt;
+&lt;li&gt;gateway [OPTIONAL]- 如果设置此参数，CAS 将不会向客户端询问凭据。如果客户端与 CAS 之间存在预先存在的单点登录会话，或者可以通过非交互方式（即信任身份验证）建立单点登录会话，则 CAS 可以将客户端重定向到“ service”参数，附加有效的服务票证。（CAS 还可以插入一个咨询页面，通知客户端已进行 CAS 身份验证。）如果客户端没有与 CAS 的单点登录会话，并且无法建立非交互式身份验证，则 CAS 必须重定向客户端到“service”参数指定的 URL，且该 URL 中不附加“ticket”参数。如果未指定“service”参数并设置了“gateway”，则 CAS 的行为未定义。建议在这种情况下，CAS 请求凭据，就像未指定任何参数一样。该参数与“renew”参数不兼容。如果两者都设置了，则行为未定义。建议设置网关参数时其值为“true”。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;示例：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://server/cas/login?service=http%3A%2F%2Fwww.service.com
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;logout&#34;&gt;/logout&lt;/h3&gt;
+&lt;p&gt;/logout销毁客户端的单点登录 CAS 会话。票证授予 cookie被销毁，后续对/login 的请求将无法获取服务票证，直到用户再次提供主凭据（从而建立新的单点登录会话）。&lt;/p&gt;
+&lt;p&gt;以下 HTTP 请求参数可以指定为/logout。它区分大小写。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;url [可选] - 如果指定了“url”，则“url”指定的 URL 应位于注销页面上并带有描述性文本。例如，“您刚刚注销的应用程序提供了一个希望您关注的链接。请点击此处访问http://www.go-back.edu。”&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;servicevalidate-cas-20&#34;&gt;/serviceValidate [CAS 2.0]&lt;/h3&gt;
+&lt;p&gt;/serviceValidate检查服务票证的有效性并返回 XML 片段响应。/serviceValidate 还必须在请求时生成并发出代理授予票证。如果 /serviceValidate 收到代理票证，则不得返回成功的身份验证。建议如果 /serviceValidate 收到代理票证，则 XML 响应中的错误消息应解释验证失败，因为代理票证已传递给/serviceValidate。&lt;/p&gt;
+&lt;p&gt;以下 HTTP 请求参数可以指定为/serviceValidate。它们区分大小写。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;service [REQUIRED]- 为其签发票证的服务的标识符，如第 2.2.1 节中所述。&lt;/li&gt;
+&lt;li&gt;ticket [REQUIRED]- /login 发出的服务票证。服务票据在第 3.1 节中描述。&lt;/li&gt;
+&lt;li&gt;pgtUrl [OPTIONAL]- 代理回调的 URL。第 2.5.4 节中讨论。&lt;/li&gt;
+&lt;li&gt;renew [OPTIONAL]- 如果设置此参数，则仅当服务票证是通过用户的主要凭据的呈现发出的时，票证验证才会成功。如果票证是从单点登录会话发出的，则会失败。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;/serviceValidate将返回 XML 格式的 CAS serviceResponse，如附录 A 中的 XML 架构中所述。以下是响应示例：&lt;/p&gt;
+&lt;p&gt;票证验证成功时：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;cas:serviceResponse&lt;/span&gt; xmlns:cas=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;http://www.yale.edu/tp/cas&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;cas:authenticationSuccess&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;cas:user&amp;gt;&lt;/span&gt;username&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/cas:user&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;cas:proxyGrantingTicket&amp;gt;&lt;/span&gt;PGTIOU-84678-8a9d...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/cas:proxyGrantingTicket&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/cas:authenticationSuccess&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/cas:serviceResponse&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;票据验证失败时：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;cas:serviceResponse&lt;/span&gt; xmlns:cas=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;http://www.yale.edu/tp/cas&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;cas:authenticationFailure&lt;/span&gt; code=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;INVALID_TICKET&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Ticket ST-1856339-aA5Yuvrxzpv8Tau1cYQ7 not recognized
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/cas:authenticationFailure&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/cas:serviceResponse&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: OIDC和OAuth2协议</title>
+      <link>/docs/protocol/oidc/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/protocol/oidc/</guid>
+      <description>
+        
+        
+        &lt;p&gt;OIDC，全称为OpenID Connect，是基于OAuth 2.0 的身份认证协议。在理解OIDC之前，需要先搞清楚OAuth 2.0的相关定义。&lt;/p&gt;
+&lt;h2 id=&#34;认证和授权&#34;&gt;认证和授权&lt;/h2&gt;
+&lt;p&gt;首先，我们需要区分Authentication和Authorization，即认证和授权。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Authentication（认证），指的是身份验证，验证“你是谁”的过程。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Authorization（授权），指的是权限授予，验证“你能访问什么”的过程。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;举个生活中的例子，当我们需要登机时，需要出示登机牌和机票。登机牌证明了我们的身份，机票证明了我们可以乘坐什么舱位。在实际的使用场景中，Authentication和Authorization是相互依赖的，了解了这两个概念，有助于我们了解OIDC的相关概念。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;OAuth2.0是一个授权协议，并不能解决身份认证的问题。
+OIDC才是认证协议，真正完成了单点登录。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;密码和令牌&#34;&gt;密码和令牌&lt;/h2&gt;
+&lt;p&gt;假设如下场景：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;当用户张三需要访问他的邮箱系统的时候，邮箱系统需要校验张三的用户名和密码。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;假如说另一个业务系统OA也想代替张三来代收邮件。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;那么问题就来了，在OAuth2出现之前，通常的做法就是张三把他的密码share给这个OA系统。 这么做存在严重的安全隐患：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;如何控制OA系统的访问权限，如何不让OA系统以张三的名义随便发邮件?&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如何回收OA系统访问邮件的权限?&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;OAuth2就是为了解决这个问题而诞生的，OAuth2引入了”授权“以及access_token的概念。&lt;/p&gt;
+&lt;p&gt;令牌（token）和密码（password）的作用都能够让OA系统访问邮箱系统，但他们有以下几点差异：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;token是短期的，到期自动失效，用户自己无法修改。密码一般长期有效，用户不修改，就不会发生变化。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;令牌可以被数据所有者撤销，会立即失效。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;令牌有权限范围（scope），比如只能接收邮件，不能发送邮件。对于网络服务来说，只读令牌就比读写令牌更安全。密码一般是完整权限。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;oauth20的授权类型&#34;&gt;OAuth2.0的授权类型&lt;/h2&gt;
+&lt;p&gt;根据 RFC 6749，OAuth 2.0 对于如何颁发令牌的细节，规定得非常详细，分成以下几种授权类型（authorization grant）。&lt;/p&gt;
+&lt;h3 id=&#34;授权码模式authorization-code&#34;&gt;授权码模式（Authorization Code）&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;用户SP网站点击后就会跳转到IDP网站，授权用户数据给SP网站使用。下面就是SP网站跳转IDP网站的一个示意链接。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://www.idp.com/oauth/authorize?response_type=code&amp;amp;client_id=CLIENT_ID&amp;amp;redirect_uri=CALLBACK_URL&amp;amp;scope=read
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;response_type参数表示要求返回授权码（code）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;client_id参数让认证源知道是哪个系统在请求用户信息&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;redirect_uri参数是IDP网站接受或拒绝请求后的跳转网址&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;scope参数表示要求的授权范围&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;用户跳转后，IDP网站会要求用户登录，然后询问是否同意给予SP网站授权。用户表示同意之后，这时IDP网站就会跳回redirect_uri参数指定的网址。跳转时，会传回一个授权码。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://www.sp.com/callback?code=AUTHORIZATION_CODE
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;SP网站拿到授权码以后，在服务端向IDP网站请求令牌token。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这里一定要由服务端发起请求，CLIENT_SECRET不能由前端页面获知&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl &lt;span style=&#34;color:#cb4b16&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#cb4b16&#34;&gt;&lt;/span&gt;    -X POST https://www.idp.com/oauth/token &lt;span style=&#34;color:#cb4b16&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#cb4b16&#34;&gt;&lt;/span&gt;    -H &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;Content-Type:application/x-www-form-urlencoded&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#cb4b16&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#cb4b16&#34;&gt;&lt;/span&gt;    -H &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;Authorization:Basic {CLIENT_ID: CLIENT_SECRET}&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#cb4b16&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#cb4b16&#34;&gt;&lt;/span&gt;    -d &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;{grant_type=authorization_code&amp;amp;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;        code={code}&amp;amp;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;        redirect_uri=https://www.sp.com/callback
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;        client_id=CLIENT_ID&amp;amp;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;        client_secret=CLIENT_SECRET&amp;amp;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;        grant_type=authorization_code&amp;amp;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;        code=AUTHORIZATION_CODE&amp;amp;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;        redirect_uri=CALLBACK_URL
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;}&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;IDP服务端验证成功后，会返回如下response。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;HTTP/&lt;span style=&#34;color:#2aa198&#34;&gt;1.1&lt;/span&gt;  &lt;span style=&#34;color:#2aa198&#34;&gt;200&lt;/span&gt; OK 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Content-Type: application/json 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;access_token&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;xxxxxxx&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;refresh_token&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;xxxxxxxxx&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;token_type&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;Bearer&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;expires_in&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#2aa198&#34;&gt;3600&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;oidc&#34;&gt;OIDC&lt;/h2&gt;
+&lt;p&gt;我们前面提到了认证和授权，注意，&lt;strong&gt;OAuth协议只是一个授权协议，不涉及到身份认证&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;OIDC在OAuth2.0的基础上，添加了身份认证的一层。&lt;/p&gt;
+&lt;p&gt;OIDC增加了以下内容&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;token接口增加了id_token的返回：在获取token接口，除了返回access_token和refresh_token，还需要返回id_token，id_token是一个JWT格式的token，里面携带用户信息。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;增加了user_info接口：使用access_token可以调用user_info接口获取用户信息。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;定义了well-known接口：即OIDC的描述文件。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;id_token&#34;&gt;id_token&lt;/h3&gt;
+&lt;p&gt;在OIDC的规范里，详细定义了id_token的格式，必须为JWT格式。&lt;/p&gt;
+&lt;p&gt;OIDC服务端需要提供一个RSA的公钥，供客户端验证JWT的签名。&lt;/p&gt;
+&lt;p&gt;id_token里携带了用户基本信息，客户端可以直接使用id_token里的信息，也可以使用access_token调用user_info接口获取用户信息&lt;/p&gt;
+&lt;h3 id=&#34;user_info接口&#34;&gt;user_info接口&lt;/h3&gt;
+&lt;p&gt;客户端除了使用id_token标识用户以外，还可以额外调用user_info接口，获取用户信息&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl &lt;span style=&#34;color:#cb4b16&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#cb4b16&#34;&gt;&lt;/span&gt;    -X GET https://www.idp.com/oauth/user_info &lt;span style=&#34;color:#cb4b16&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#cb4b16&#34;&gt;&lt;/span&gt;    -H &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;Content-Type:application/json &amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#cb4b16&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#cb4b16&#34;&gt;&lt;/span&gt;    -H &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;Authorization:Bearer {access_token}&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#cb4b16&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此处使用Bearer Token的方式，详见备注2。&lt;/p&gt;
+&lt;p&gt;OIDC客户端，返回的用户信息的属性是严格规范的&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;sub&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;us-xxxx&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;张三&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;preferred_username&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;zhangsan&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;email&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;zhangsan@test.com&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;email_verified&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#cb4b16&#34;&gt;true&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;phone_number&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;123456789001&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;phone_number_verified&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#cb4b16&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: SAML2协议</title>
+      <link>/docs/protocol/saml2/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/protocol/saml2/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SAML，全称为Security Assertion Markup Language，是一种用于安全性断言的标记语言，目前的最新版本是2.0。&lt;/p&gt;
+&lt;p&gt;它是一个基于XML的标准，用于在不同的安全域(security domain)之间交换认证和授权数据。SAML2.0可以帮助我们跨域实现单点登录。&lt;/p&gt;
+&lt;h2 id=&#34;术语介绍&#34;&gt;术语介绍&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;服务提供方(Service Provider，简称SP)，服务提供的实体。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;身份提供方（Identity Provider，简称IDP），身份提供的实体，包含对用户进行身份验证的能力。在SAML协议里，严格规范了IDP和SP之间传输的Token格式。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SAML请求（SAMLRequest），由SP生成，发送给IDP的身份验证请求，所以一般也叫做AuthnRequest（Authentication Request）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SAML响应（SAMLResponse），由IDP生成，携带用户身份信息，发送给SP的身份验证结果，所以一般也叫做SAMLAssertion。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;服务提供方发起（SP-initiated），表示整个认证流程是由SP发起的，当客户直接访问SP的资源或网站时，跳转到IDP再跳转回来的过程，我们就称这个过程是SP-initiated的单点登录。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;认证提供方发起（IDP-initiated），表示整个认证流程是由IDP发起的，IDP直接提供SAML响应给到SP方，验证用户身份。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;saml认证流程&#34;&gt;SAML认证流程&lt;/h2&gt;
+&lt;p&gt;下面介绍的是一个SP-initiated的完整认证流程，IDP-initiated可以理解为是SP-initiated的简化部分。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/saml.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;用户打开SP地址。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SP接收到请求之后，携带SAMLRequest请求到到IDP处（SAMLRequest的格式后面会给出）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;IDP接收到SAMLRequest后，会在IDP验证用户身份，玉符统一身份会检查当前用户是否登录，如果未登录跳转登录页面。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;IDP验证身份通过后，会重定向到SP，携带SAMLResponse（SAMLResponse的格式后面会给出）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SP验证SAMLResponse，验证通过后取出SAMLResponse里携带的用户信息，访问对应的用户。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;samlrequest介绍&#34;&gt;SAMLRequest介绍&lt;/h2&gt;
+&lt;p&gt;下面是一个SAMLRequest的XML示例:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2p:AuthnRequest&lt;/span&gt; xmlns:saml2p=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:protocol&amp;#34;&lt;/span&gt; AssertionConsumerServiceURL=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://www.sp.com/saml/acs&amp;#34;&lt;/span&gt; Destination=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://www.idp.com/saml/authn&amp;#34;&lt;/span&gt; ForceAuthn=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;false&amp;#34;&lt;/span&gt; ID=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;_7xvtiohf7xupg9ulo8an1g4bemeranpifvup&amp;#34;&lt;/span&gt; IsPassive=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;false&amp;#34;&lt;/span&gt; IssueInstant=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;2019-07-25T09:59:02.467Z&amp;#34;&lt;/span&gt; ProtocolBinding=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&amp;#34;&lt;/span&gt; Version=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;2.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2:Issuer&lt;/span&gt; xmlns:saml2=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:assertion&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;https://www.sp.com&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/saml2:Issuer&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/saml2p:AuthnRequest&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在实际请求中，还需要将SAMLReqeust进行Base64编码，上文示例的SAMLRequest进行Base64编码之后如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;fZFBT8JAEIXvJv6Hzd5pSwPWbigJSowkGhuoHryYpQywSTu77uwWfr6lYISYcJ158+bNNyOSdRUbMfFui3P49kCO7esKSRw7GfcWhZakSKCsgYQrxWLy+iLiIBLGaqdLXXE2IQLrlMZHjeRrsAuwjSrhff6S8a1zhkQY7na7gExQ6jo8uIeyJM6m7UqF8jB7qVSrc+khIGdP2pbQhc34WlYEnM2mGf9K9k1rsF0ne282qa/0vcT+ZrCENolEo9aNN62UckmkGvgbJvIwQ3ISXcbjqJ/2oqQXD4soFcNURHEwuEs+OctPhz4oXCncXKeyPIpIPBdF3svfFgVnH2Cpu7AV8PHtDWOjDrDoEthz5tfN5S9oPv6PdRSem7ZrToXLB49/AA==
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当服务提供方SP未登录时，需要跳转到认证提供方IDP的地址，进行身份验证操作，最终生成的URL如下所示：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://www.idp.com/saml/authn?SAMLRequest=fZFBT8JAEIXvJv6Hzd5pSwPWbigJSowkGhuoHryYpQywSTu77uwWfr6lYISYcJ158+bNNyOSdRUbMfFui3P49kCO7esKSRw7GfcWhZakSKCsgYQrxWLy+iLiIBLGaqdLXXE2IQLrlMZHjeRrsAuwjSrhff6S8a1zhkQY7na7gExQ6jo8uIeyJM6m7UqF8jB7qVSrc+khIGdP2pbQhc34WlYEnM2mGf9K9k1rsF0ne282qa/0vcT+ZrCENolEo9aNN62UckmkGvgbJvIwQ3ISXcbjqJ/2oqQXD4soFcNURHEwuEs+OctPhz4oXCncXKeyPIpIPBdF3svfFgVnH2Cpu7AV8PHtDWOjDrDoEthz5tfN5S9oPv6PdRSem7ZrToXLB49/AA==
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;samlresponse介绍&#34;&gt;SAMLResponse介绍&lt;/h2&gt;
+&lt;p&gt;当IDP接受到服务提供方SP发起的SAMLRequest时，会在IDP的域内进行身份认证操作，完成登录行为之后，会携带当前登录的用户身份，发送SAMLResponse给到服务提供方SP。&lt;/p&gt;
+&lt;p&gt;下面是一个SAMLResponse的XML示例:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2p:Response&lt;/span&gt; xmlns:saml2p=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:protocol&amp;#34;&lt;/span&gt; Destination=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://www.sp.com/saml/acs&amp;#34;&lt;/span&gt; ID=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;_80ff50f0-73e9-4357-934e-15939aa197ae&amp;#34;&lt;/span&gt; InResponseTo=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;_7xvtiohf7xupg9ulo8an1g4bemeranpifvup&amp;#34;&lt;/span&gt; IssueInstant=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;2019-07-25T09:59:01.653Z&amp;#34;&lt;/span&gt; Version=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;2.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2:Issuer&lt;/span&gt; xmlns:saml2=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:assertion&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;https://www.idp.com&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/saml2:Issuer&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2p:Status&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2p:StatusCode&lt;/span&gt; Value=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:status:Success&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/saml2p:Status&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2:Assertion&lt;/span&gt; xmlns:saml2=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:assertion&amp;#34;&lt;/span&gt; ID=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;_ee51e413-cb8c-4cff-a833-8e5ab5a65712&amp;#34;&lt;/span&gt; IssueInstant=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;2019-07-25T09:59:01.653Z&amp;#34;&lt;/span&gt; Version=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;2.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2:Issuer&amp;gt;&lt;/span&gt;https://www.idp.com&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/saml2:Issuer&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:Signature&lt;/span&gt; xmlns:ds=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;http://www.w3.org/2000/09/xmldsig#&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:SignedInfo&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:CanonicalizationMethod&lt;/span&gt; Algorithm=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;http://www.w3.org/2001/10/xml-exc-c14n#&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:SignatureMethod&lt;/span&gt; Algorithm=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;http://www.w3.org/2000/09/xmldsig#rsa-sha1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:Reference&lt;/span&gt; URI=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;#_ee51e413-cb8c-4cff-a833-8e5ab5a65712&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:Transforms&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:Transform&lt;/span&gt; Algorithm=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;http://www.w3.org/2000/09/xmldsig#enveloped-signature&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:Transform&lt;/span&gt; Algorithm=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;http://www.w3.org/2001/10/xml-exc-c14n#&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/ds:Transforms&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:DigestMethod&lt;/span&gt; Algorithm=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;http://www.w3.org/2000/09/xmldsig#sha1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:DigestValue&amp;gt;&lt;/span&gt;SeLenKpDFTFSrd4RodgCxUbXi1I=&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/ds:DigestValue&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/ds:Reference&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/ds:SignedInfo&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:SignatureValue&amp;gt;&lt;/span&gt;fEN31jRzjpGPSFEazXSYIu8mlhSrB/2rhlGmkQw8vbgUlHveU4BfX91knG11yF4HcLd5686WYWCS9P9szLvcxuQlVi1z5NiIFs967Z3hCZuU6mP86/5qEJVOVeUnaS39YtP8Jwxoev2d4QJjJ0+9+9ifOQkf4bhM+9b8Q1/3A5Q4xqjvArHTwGQMnjpi5hJQprkreChvNXGu3vemzHb5HEGkQHsbwavuA65VDwQ3sxdQbbDjQrXMIZWlKt51IXHhDVrlCwVIDXPCrN1e3wJrkLPitAUbhDCcRdVvmc8a5lcmvX4SkDn7PwzmFAf1rXACCyvKft5YycYnN7zHkymLCA==&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/ds:SignatureValue&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:KeyInfo&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:X509Data&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:X509SubjectName&amp;gt;&lt;/span&gt;C=CN,L=Beijing,CN=com,CN=yufuid&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/ds:X509SubjectName&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:X509Certificate&amp;gt;&lt;/span&gt;MIIC/DCCAeSgAwIBAgIIBjRkHLoMipUwDQYJKoZIhvcNAQEFBQAwPjEPMA0GA1UEAwwGeXVmdWlkMQwwCgYDVQQDDANjb20xEDAOBgNVBAcMB0JlaWppbmcxCzAJBgNVBAYTAkNOMB4XDTE5MDcyMzEwNDA1NloXDTIwMDcyMjEwNDA1NlowPjEPMA0GA1UEAwwGeXVmdWlkMQwwCgYDVQQDDANjb20xEDAOBgNVBAcMB0JlaWppbmcxCzAJBgNVBAYTAkNOMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0dk/S9XEiBio3CRccVIsjFX4KBGZPfz47jrm9TF1v3t+7Cy7WkYD6EW/rQYi7ORfRTVx8m8UsiB04MjwHARtVdDPP9COxfjkVp5h5nQv1P6WYtZjIFDiIBbS0of1YmeHzCixxGQDk+PL/M19aey9DoRVg9MjcQYppjoiYbJhqj/YL2kCO5QgaquPptBCVKcMpqE1BCggPLyH3M1V7/QJXzRKBs/iOO/3yUnapftK/ysZeWMZ2hEGlB/AW3OP9pO2vijONqxbHqTFyngyYof+QRl7F5KsmZNP5Pd6SoYo0MtrEsDVIchdx9Mb1iCLZfiHqbq8s4mr7+alvuyBE1lW+QIDAQABMA0GCSqGSIb3DQEBBQUAA4IBAQAdz05eOepSmE+IFMdwLkkD5oDBBwC16ie5BpXBxFAYxEYrQ8sZPmjTIhG+tQe3lnkxmrgyPbq1pevybGl3aR9dPWysg3ps2pK+pJQt6aRHQbNhy+fFT4uqZzVXy/61LPt8OhhhzjGVoApIh53A4OuffV2B1PueBChjrrKEZGHk5iVuzv1kEtGu0NIKbTXBcG7ZfX+2pKYYKw3AKllFDSBL/ePFjUh5iXJWwwGflqwtQjmZYZt4k+UMDIW7L6r5FlDNc4JGjH1gWOXpCZ6EkGR1rAmK2Fnv1/5LTRVYrMlGYlCx29DhM7GVnpgfTmua15E3dW+WyS4TOM8UnjavAIBa&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/ds:X509Certificate&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/ds:X509Data&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/ds:KeyInfo&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/ds:Signature&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2:Subject&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2:NameID&lt;/span&gt; Format=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;sanzhang&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/saml2:NameID&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2:SubjectConfirmation&lt;/span&gt; Method=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:cm:bearer&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2:SubjectConfirmationData&lt;/span&gt; InResponseTo=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;_7xvtiohf7xupg9ulo8an1g4bemeranpifvup&amp;#34;&lt;/span&gt; NotOnOrAfter=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;2019-07-25T10:04:01.647Z&amp;#34;&lt;/span&gt; Recipient=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://www.sp.com/saml/acs&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/saml2:SubjectConfirmation&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/saml2:Subject&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2:Conditions&lt;/span&gt; NotBefore=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;2019-07-25T09:54:01.647Z&amp;#34;&lt;/span&gt; NotOnOrAfter=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;2019-07-25T10:04:01.647Z&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2:AudienceRestriction&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2:Audience&amp;gt;&lt;/span&gt;https://www.sp.com&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/saml2:Audience&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/saml2:AudienceRestriction&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/saml2:Conditions&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2:AuthnStatement&lt;/span&gt; AuthnInstant=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;2019-07-25T09:59:01.653Z&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2:AuthnContext&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;saml2:AuthnContextClassRef&amp;gt;&lt;/span&gt;urn:oasis:names:tc:SAML:2.0:ac:classes:Password&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/saml2:AuthnContextClassRef&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/saml2:AuthnContext&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/saml2:AuthnStatement&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/saml2:Assertion&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/saml2p:Response&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里的参数比较多，就不一一介绍了，只标记几个关键字段进行解释：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;这里的Destination其实表示的是服务提供方SP接收SAML响应的地址，如示例的 &lt;a href=&#34;https://www.sp.com/saml/acs&#34;&gt;https://www.sp.com/saml/acs&lt;/a&gt; 。注意一定要跟SAMLRequest里的Destination区分开来。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;NameID表示登录的用户身份，这里的响应表示登录的用户为sanzhang。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SAMLResponse是会指定有效期的，用NotBefore和NotOnOfAfter进行表示，上述示例中，该响应的有效期为2019年7月25日9点54分到2019年7月25日10点54分（北京时间需要增加八小时）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;saml如何保证响应的有效性&#34;&gt;SAML如何保证响应的有效性&lt;/h2&gt;
+&lt;p&gt;身份提供方IDP需要生成密钥对，用密钥对生成配套的证书，并将证书给到服务提供方SP。SP需要存储证书，当IDP签发SAMLResponse时，会对Response响应进行签名，当SP接受到IDP签发的SAMLResponse时，需要用证书校验签名的有效性。&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 理解LDAP</title>
+      <link>/docs/protocol/ldap/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/protocol/ldap/</guid>
+      <description>
+        
+        
+        &lt;p&gt;LDAP，全称为&lt;strong&gt;Lightweight directory access protocol&lt;/strong&gt;，轻量级目录访问协议，是用于用户管理的标准协议，或者说是一种语言规范。使用LDAP协议，可以帮助用户快速找到需要的信息。&lt;/p&gt;
+&lt;p&gt;基于LDAP协议，可以实现各种各样的目录程序。微软的AD(Active Directory)也是基于LDAP的解决方案。我们通常说的LDAP Server，其实一般指的是搭载了这类目录程序的服务器。&lt;/p&gt;
+&lt;h2 id=&#34;概念介绍&#34;&gt;概念介绍&lt;/h2&gt;
+&lt;p&gt;下图是一个LDAP目录的示例，可以帮助我们理解相关的概念&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/common/ldap.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;目录directory&#34;&gt;目录（Directory）&lt;/h2&gt;
+&lt;p&gt;我们可以将目录看是一个特殊的数据库，一个树状结构的数据存储，所以我们也会把这种结构称为目录树。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意，这里的树状结构知识为了方便理解，目录树结构只定义了数据的访问方式，与数据本身的存储实现方式无关。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;目录树里面每一个节点都是一个条目，每个条目可能有零个或N个子条目。&lt;/p&gt;
+&lt;p&gt;目录树的根节点是一个特殊的条目，一般称为RootDSE(Root Directory Server Agent Service Entry)。&lt;/p&gt;
+&lt;p&gt;一般在根节点表示当前服务器的域，如上图所示，根节点是dc=people,dc=com。&lt;/p&gt;
+&lt;h2 id=&#34;对象类objectclass&#34;&gt;对象类（ObjectClass）&lt;/h2&gt;
+&lt;p&gt;相信你已经发现了，在ldap目录里，一切都是条目。为了区分不同的对象，LDAP定义了ObjectClass的概念，上图的dc，ou都属于ObjectClass。每个条目包含一个或多个对象类。&lt;/p&gt;
+&lt;p&gt;LDAP预置了很多ObjectClass。&lt;/p&gt;
+&lt;h2 id=&#34;属性attributes&#34;&gt;属性（Attributes）&lt;/h2&gt;
+&lt;p&gt;所有的属性必须归属于某一个或多个对象类，并定义了自身所包含的数据类型。每个属性都要有一个唯一的名称，值可以是单值，也可以是多值。&lt;/p&gt;
+&lt;p&gt;DN和RDN
+RDN(Relative Distinguished Name)，指当前节点相对于父节点的名称，如上图的cn=Robert Smith。&lt;/p&gt;
+&lt;p&gt;DN(Distinguished Name)，是每一个节点在目录里的唯一标识符，DN是由很多个RDN组成的，对于上图的cn=Robert Smith节点，其DN为cn=Robert Smith,ou=people,dc=example,dc=com。&lt;/p&gt;
+&lt;p&gt;如果一个条目从一个父节点移动到另一个父节点，其dn将被更改。&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 认证和授权</title>
+      <link>/docs/protocol/authenauthor/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/protocol/authenauthor/</guid>
+      <description>
+        
+        
+        &lt;p&gt;在业务系统的开发当中，认证（Authentication）与授权（Authorization）是十分重要的概念。无论是开发内部业务应用系统，或是为合作伙伴构建业务入口，还是通过开放一系列API接口让外部开发者在自有资源上开发应用系统，我们都需要一个可靠的认证和授权支持。&lt;/p&gt;
+&lt;p&gt;认证与授权在身份管理中担任的职责&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;认证&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;认证是一个证明“我是谁”的过程。在现实生活中，我们每天都会进行“认证”的操作：在购买车票时出示身份证、在乘坐国际航班时提供护照、在交警例行检查中出示驾驶证等等。此时，身份证、护照、驾驶证起到了证明身份的作用。&lt;/p&gt;
+&lt;p&gt;在互联网中，我们常常通过输入帐号密码来证明“我是谁”，此时，这些帐号密码的作用就像是身份证，证明了我们在网络平台的身份。这就是互联网业务系统中的认证。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;授权&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;认证过程仅仅解决了某一实体的身份证明的过程，向业务系统回答了“我是谁”，但是并没有回答“我被允许做什么？”的问题，而这正是授权的职责。当某一实体被认证进入一个业务系统的时候，业务系统需要知道这一认证过的实体是否能够接入、查看或者操作某些项目。&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
