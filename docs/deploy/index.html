@@ -150,12 +150,19 @@
     <li><a href="#requirements">Requirements</a></li>
     <li><a href="#端口说明">端口说明</a>
       <ul>
-        <li><a href="#外部端口">外部端口</a></li>
+        <li><a href="#外部端口防火墙开放">外部端口(防火墙开放)</a></li>
         <li><a href="#内置端口">内置端口</a></li>
       </ul>
     </li>
     <li><a href="#安装">安装</a></li>
     <li><a href="#ssl配置">SSL配置</a></li>
+    <li><a href="#附录">附录</a>
+      <ul>
+        <li><a href="#docker安装">Docker安装</a></li>
+        <li><a href="#华为云安装">华为云安装</a></li>
+        <li><a href="#腾讯云安装">腾讯云安装</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
       </div>
@@ -226,7 +233,7 @@
 <li>4 GB RAM</li>
 </ul>
 <h2 id="端口说明">端口说明</h2>
-<h3 id="外部端口">外部端口</h3>
+<h3 id="外部端口防火墙开放">外部端口(防火墙开放)</h3>
 <ul>
 <li>80、443：authsaur</li>
 <li>8000：authsaur dashboard</li>
@@ -235,22 +242,88 @@
 <ul>
 <li>8080、8443：authsaur server</li>
 <li>8787：authsaur admin api</li>
-<li>3336：mysql</li>
-<li>6579：redis</li>
+<li>3306：mysql</li>
+<li>6379：redis</li>
 </ul>
 <h2 id="安装">安装</h2>
-<p>我们的建议总是下载最新版本的代码仓库：</p>
+<ol>
+<li>我们的建议总是下载最新版本的代码仓库：</li>
+</ol>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git clone https://github.com/authsaur/authsaur-docker.git
-</span></span></code></pre></div><p>然后配置环境变量，可用的键在 <code>.env</code> 中定义：</p>
+</span></span></code></pre></div><ol start="2">
+<li>然后配置环境变量，可用的键在 <code>.env</code> 中定义，通常需要修改IP为本机IP地址：</li>
+</ol>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#586e75"># 访问IP地址</span>
 </span></span><span style="display:flex;"><span><span style="color:#268bd2">AUTHSAUR_IP</span><span style="color:#719e07">=</span>127.0.0.1
 </span></span><span style="display:flex;"><span><span style="color:#586e75"># 是否开启SSL，可选值：http或https</span>
 </span></span><span style="display:flex;"><span><span style="color:#268bd2">SSL</span><span style="color:#719e07">=</span>http
-</span></span></code></pre></div><p>在此目录中运行<code>sh install.sh</code>进行安装，该脚本将处理您开始所需的所有事情。</p>
+</span></span></code></pre></div><ol start="3">
+<li>
+<p>在此目录中运行<code>sudo sh install.sh</code>进行安装，该脚本将处理您开始所需的所有事情。</p>
+</li>
+<li>
 <p>最后运行<code>docker-compose up -d</code>启动authsaur。您应该能够访问 http://127.0.0.1:8000 进入管理后台页面，访问 http://127.0.0.1 进入单点登录页面，默认账号密码为：<code>authsaur-admin/Mellon</code>。</p>
+</li>
+</ol>
+
+
+<div class="alert alert-primary" role="alert">
+
+
+    Authsaur要求Mysql、Redis优先启动，如果启动失败可以多次运行<code>docker-compose up -d</code>确保Authsaur启动完成。
+
+</div>
+
 <h2 id="ssl配置">SSL配置</h2>
 <p>如果开启了SSL，需要替换<code>cert/authsaur.key</code>、<code>cert/authsaur.pem</code>为正确的证书。</p>
-
+<h2 id="附录">附录</h2>
+<h3 id="docker安装">Docker安装</h3>
+<ul>
+<li>镜像：Ubuntu 20.04 server 64bit</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#586e75"># 安装docker</span>
+</span></span><span style="display:flex;"><span>sudo apt-get update
+</span></span><span style="display:flex;"><span>sudo apt-get install ca-certificates curl gnupg
+</span></span><span style="display:flex;"><span>sudo install -m <span style="color:#2aa198">0755</span> -d /etc/apt/keyrings
+</span></span><span style="display:flex;"><span>curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+</span></span><span style="display:flex;"><span>sudo chmod a+r /etc/apt/keyrings/docker.gpg
+</span></span><span style="display:flex;"><span><span style="color:#b58900">echo</span>   <span style="color:#2aa198">&#34;deb [arch=&#34;</span><span style="color:#719e07">$(</span>dpkg --print-architecture<span style="color:#719e07">)</span><span style="color:#2aa198">&#34; signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+</span></span></span><span style="display:flex;"><span><span style="color:#2aa198">  &#34;</span><span style="color:#719e07">$(</span>. /etc/os-release <span style="color:#719e07">&amp;&amp;</span> <span style="color:#b58900">echo</span> <span style="color:#2aa198">&#34;</span><span style="color:#268bd2">$VERSION_CODENAME</span><span style="color:#2aa198">&#34;</span><span style="color:#719e07">)</span><span style="color:#2aa198">&#34; stable&#34;</span> |   sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+</span></span><span style="display:flex;"><span>sudo apt-get update
+</span></span><span style="display:flex;"><span>sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#586e75"># 安装docker-compose</span>
+</span></span><span style="display:flex;"><span>apt-get install docker-compose -y
+</span></span></code></pre></div><h3 id="华为云安装">华为云安装</h3>
+<ul>
+<li>规格：通用计算型 | 2vCPUs | 4GiB | s3.large.2</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#586e75"># 安装Authsaur</span>
+</span></span><span style="display:flex;"><span>git clone https://github.com/authsaur/authsaur-docker.git
+</span></span><span style="display:flex;"><span><span style="color:#b58900">cd</span> authsaur-docker/
+</span></span><span style="display:flex;"><span>vi .env
+</span></span><span style="display:flex;"><span>sudo sh install.sh
+</span></span><span style="display:flex;"><span>docker-compose up -d
+</span></span></code></pre></div><h3 id="腾讯云安装">腾讯云安装</h3>
+<ul>
+<li>规格：轻量级 CPU - 2核 内存 - 4GB</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#586e75"># docker无需sudo</span>
+</span></span><span style="display:flex;"><span>sudo groupadd docker
+</span></span><span style="display:flex;"><span>sudo gpasswd -a <span style="color:#2aa198">${</span><span style="color:#268bd2">USER</span><span style="color:#2aa198">}</span> docker
+</span></span><span style="display:flex;"><span><span style="color:#586e75"># 退出并重新登陆</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#586e75"># 重启docker服务</span>
+</span></span><span style="display:flex;"><span>sudo service docker restart
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#586e75"># 安装Authsaur</span>
+</span></span><span style="display:flex;"><span>git clone https://github.com/authsaur/authsaur-docker.git
+</span></span><span style="display:flex;"><span><span style="color:#b58900">cd</span> authsaur-docker/
+</span></span><span style="display:flex;"><span>vi .env
+</span></span><span style="display:flex;"><span>sudo sh install.sh
+</span></span><span style="display:flex;"><span>docker-compose up -d
+</span></span></code></pre></div>
         <div class="section-index">
     
     
