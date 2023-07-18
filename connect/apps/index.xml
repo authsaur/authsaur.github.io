@@ -1,0 +1,473 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Authsaur – 案例</title>
+    <link>/connect/apps/</link>
+    <description>Recent content in 案例 on Authsaur</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 05 Jan 2017 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/connect/apps/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Connect: Co Design</title>
+      <link>/connect/apps/codesign/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/apps/codesign/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;在authsaur中创建应用&#34;&gt;在Authsaur中创建应用&lt;/h2&gt;
+&lt;p&gt;进入应用市场 ，点击 Co Design，填写应用名称和CAS回调地址。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/co-design/1-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;配置-co-design&#34;&gt;配置 Co Design&lt;/h2&gt;
+
+
+&lt;div class=&#34;alert alert-primary&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;注意&lt;/h4&gt;
+
+    Co Design 需要先进行企业认证才能配置 SSO。
+
+&lt;/div&gt;
+
+&lt;p&gt;以管理员账号登录 Co Design，点击左下角企业按钮，进入企业管理界面。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/co-design/2-2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;点击「添加认证源」，选择&lt;strong&gt;CAS&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/co-design/2-3.png&#34; alt=&#34;&#34;&gt;
+&lt;img src=&#34;/images/integration/co-design/2-4.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;输入显示名称、Logo 等信息，点击「确定」填写完成后，点击「生成回调链接」。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/co-design/2-9.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在 Co Design 中点击「确定」进入&lt;strong&gt;账号关联设置&lt;/strong&gt;，按下图进行配置。
+&lt;img src=&#34;/images/integration/co-design/2-7.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;体验登录&#34;&gt;体验登录&lt;/h2&gt;
+&lt;p&gt;在Authsaur应用面板中体验单点登录。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/co-design/3-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Connect: confluence</title>
+      <link>/connect/apps/confluence/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/apps/confluence/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;在authsaur中创建应用&#34;&gt;在Authsaur中创建应用&lt;/h2&gt;
+&lt;p&gt;进入应用市场 ，点击 Confluence，填写相关信息。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/confluence/1-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;配置-confluence&#34;&gt;配置 Confluence&lt;/h2&gt;
+&lt;p&gt;以管理员身份登录 Confluence，点击右上角设置按钮，点击「一般配置」，点击左侧菜单「SSO 2.0」菜单。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/confluence/2-2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;SAML证书从Authsaur server中获取，点击保存配置。&lt;/p&gt;
+&lt;h2 id=&#34;体验登录&#34;&gt;体验登录&lt;/h2&gt;
+&lt;p&gt;在Authsaur应用面板中体验单点登录。&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Connect: gerrit</title>
+      <link>/connect/apps/gerrit/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/apps/gerrit/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;在authsaur中创建应用&#34;&gt;在Authsaur中创建应用&lt;/h2&gt;
+&lt;p&gt;进入应用市场 ，点击 Gerrit，填写相关OAuth2信息。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/gerrit/1-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;gerrit-安装oauth插件&#34;&gt;Gerrit 安装OAuth插件&lt;/h2&gt;
+&lt;p&gt;搜索OAuth插件进行安装。&lt;/p&gt;
+&lt;h2 id=&#34;修改-gerrit-config&#34;&gt;修改 Gerrit Config&lt;/h2&gt;
+&lt;p&gt;在你的 Gerrit Server 服务器，找到 Gerrit 配置文件。&lt;/p&gt;
+&lt;p&gt;如果你是在生成 Gerrit 的目录下&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vim ./etc/gerrit.config
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[gerrit]
+        basePath = git
+        canonicalWebUrl = http://36.140.31.89:8380
+        serverId = 59656e17-6bdc-4542-bcab-0c90270bc1cb
+[index]
+        type = LUCENE
+[auth]
+        type = OAUTH
+[sendemail]
+        smtpServer = localhost
+[sshd]
+        listenAddress = *:29418
+[httpd]
+        listenUrl = http://*:8080/
+        filterClass = com.googlesource.gerrit.plugins.ootb.FirstTimeRedirect
+        firstTimeRedirectUrl = /login/%23%2F?account_id=1000000
+[cache]
+        directory = cache
+[plugins]
+        allowRemoteAdmin = true
+[plugin &amp;#34;gerrit-oauth-provider-cas-oauth&amp;#34;]
+        root-url = http://116.205.137.175
+        client-id = gerrit-id
+        client-secret = gerrit-secret
+        use-json-extractor = true
+[container]
+        javaOptions = &amp;#34;-Dflogger.backend_factory=com.google.common.flogger.backend.log4j.Log4jBackendFactory#getInstance&amp;#34;
+        javaOptions = &amp;#34;-Dflogger.logging_context=com.google.gerrit.server.logging.LoggingContext#getInstance&amp;#34;
+        user = gerrit
+        javaHome = /usr/lib/jvm/java-11-openjdk-11.0.19.0.7-1.el8_7.x86_64
+        javaOptions = -Djava.security.egd=file:/dev/./urandom
+        javaOptions = --add-opens java.base/java.net=ALL-UNNAMED
+        javaOptions = --add-opens java.base/java.lang.invoke=ALL-UNNAMED
+        javaOptions = -Djava.security.egd=file:/dev/./urandom
+        javaOptions = --add-opens java.base/java.net=ALL-UNNAMED
+        javaOptions = --add-opens java.base/java.lang.invoke=ALL-UNNAMED
+[receive]
+        enableSignedPush = false
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;体验登录&#34;&gt;体验登录&lt;/h2&gt;
+&lt;p&gt;访问你的 Gerrit Server 登录地址，点击 Login 登录。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/gerrit/4-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Connect: gitlab</title>
+      <link>/connect/apps/gitlab/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/apps/gitlab/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;在authsaur中创建应用&#34;&gt;在Authsaur中创建应用&lt;/h2&gt;
+&lt;p&gt;进入应用市场 ，点击 Gitlab，填写相关信息。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/gitlab-cn/1-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;gitlab配置示例&#34;&gt;Gitlab配置示例&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;### OmniAuth Settings&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;###! Docs: https://docs.gitlab.com/ee/integration/omniauth.html&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;gitlab_rails&lt;span style=&#34;color:#719e07&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;omniauth_enabled&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#719e07&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;gitlab_rails&lt;span style=&#34;color:#719e07&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;omniauth_allow_single_sign_on&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#719e07&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;saml&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#719e07&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;# gitlab_rails[&amp;#39;omniauth_sync_email_from_provider&amp;#39;] = &amp;#39;saml&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;# gitlab_rails[&amp;#39;omniauth_sync_profile_from_provider&amp;#39;] = [&amp;#39;saml&amp;#39;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;# gitlab_rails[&amp;#39;omniauth_sync_profile_attributes&amp;#39;] = [&amp;#39;email&amp;#39;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;# gitlab_rails[&amp;#39;omniauth_auto_sign_in_with_provider&amp;#39;] = &amp;#39;saml&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;gitlab_rails&lt;span style=&#34;color:#719e07&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;omniauth_block_auto_created_users&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#719e07&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;# gitlab_rails[&amp;#39;omniauth_auto_link_ldap_user&amp;#39;] = false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;gitlab_rails&lt;span style=&#34;color:#719e07&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;omniauth_auto_link_saml_user&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#719e07&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;# gitlab_rails[&amp;#39;omniauth_auto_link_user&amp;#39;] = [&amp;#39;saml&amp;#39;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;# gitlab_rails[&amp;#39;omniauth_external_providers&amp;#39;] = [&amp;#39;twitter&amp;#39;, &amp;#39;google_oauth2&amp;#39;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;# gitlab_rails[&amp;#39;omniauth_allow_bypass_two_factor&amp;#39;] = [&amp;#39;google_oauth2&amp;#39;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;# gitlab_rails[&amp;#39;omniauth_providers&amp;#39;] = [&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;#   {&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;#     &amp;#34;name&amp;#34; =&amp;gt; &amp;#34;google_oauth2&amp;#34;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;#     &amp;#34;app_id&amp;#34; =&amp;gt; &amp;#34;YOUR APP ID&amp;#34;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;#     &amp;#34;app_secret&amp;#34; =&amp;gt; &amp;#34;YOUR APP SECRET&amp;#34;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;#     &amp;#34;args&amp;#34; =&amp;gt; { &amp;#34;access_type&amp;#34; =&amp;gt; &amp;#34;offline&amp;#34;, &amp;#34;approval_prompt&amp;#34; =&amp;gt; &amp;#34;&amp;#34; }&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;#   }&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;# ]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;gitlab_rails&lt;span style=&#34;color:#719e07&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;omniauth_providers&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#719e07&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;saml&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;label&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;saml sso&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;args&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;=&amp;gt;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;assertion_consumer_service_url&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;http://192.168.2.240:6080/users/auth/saml/callback&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;idp_cert_fingerprint&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;EC:8B:2F:12:7D:3B:6C:CD:36:6A:DF:00:73:1F:52:C9:B4:39:14:8A&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;idp_sso_target_url&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://authsaur.deepoove.com/idp/profile/SAML2/Redirect/SSO&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;issuer&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;http://192.168.2.240:6080&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;name_identifier_format&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:nameid-format:persistent&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;attribute_statements&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;=&amp;gt;&lt;/span&gt; { &lt;span style=&#34;color:#2aa198&#34;&gt;email&lt;/span&gt;: &lt;span style=&#34;color:#719e07&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;umail&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#719e07&#34;&gt;]&lt;/span&gt;,&lt;span style=&#34;color:#2aa198&#34;&gt;nickname&lt;/span&gt;: &lt;span style=&#34;color:#719e07&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;uname&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#719e07&#34;&gt;]&lt;/span&gt; },
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;uid_attribute&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#719e07&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;uprincipal&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#719e07&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;体验登录&#34;&gt;体验登录&lt;/h2&gt;
+&lt;p&gt;在 Gitlab登录页，点击登录。&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Connect: grafana</title>
+      <link>/connect/apps/grafana/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/apps/grafana/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;在authsaur中创建应用&#34;&gt;在Authsaur中创建应用&lt;/h2&gt;
+&lt;p&gt;进入应用市场 ，点击 Grafana，填写相关信息。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/grafana/1-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;配置-grafana&#34;&gt;配置 Grafana&lt;/h2&gt;
+&lt;p&gt;根据你的安装方式，找到 Grafana 的配置文件，可以参考 &lt;a href=&#34;https://grafana.com/docs/grafana/latest/administration/configuration/&#34;&gt;Grafana 文档&lt;/a&gt;。加入如下配置：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#719e07&#34;&gt;[auth.generic_oauth]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;enabled &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;name &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;Authsaur&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;allow_sign_up &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;;auto_login = false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;client_id &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;grafana-id&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;client_secret &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;grafana-secret&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;scopes &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;email phone profile openid role&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;empty_scopes &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;email_attribute_name &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;umail&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;email_attribute_path &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;me&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;login_attribute_path &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;me&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;name_attribute_path &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;uname&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;id_token_attribute_name &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;id_token&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;auth_url &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;https://116.205.137.175/oidc/oidcAuthorize&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;token_url &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;https://116.205.137.175/oidc/oidcAccessToken&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;api_url &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;https://116.205.137.175/oidc/oidcProfile&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;;allowed_domains =&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tls_skip_verify_insecure &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;配置完成重启 Grafana 即可。&lt;/p&gt;
+&lt;h2 id=&#34;体验登录&#34;&gt;体验登录&lt;/h2&gt;
+&lt;p&gt;在 Grafana 中体验登录。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/grafana/3-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;输入邮箱密码登录，注意此处邮箱后缀必须是之前配置的 &lt;strong&gt;allowed_domains&lt;/strong&gt; 中的一个。本示例中配置的为 &lt;strong&gt;test.com&lt;/strong&gt;，登录邮箱为 &lt;strong&gt;&lt;a href=&#34;mailto:test@test.com&#34;&gt;test@test.com&lt;/a&gt;&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/grafana/3-2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;点击登录即可登录成功。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/grafana/3-3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Connect: Jenkins</title>
+      <link>/connect/apps/jenkins/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/apps/jenkins/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;在-authsaur-中创建应用&#34;&gt;在 Authsaur 中创建应用&lt;/h2&gt;
+&lt;p&gt;进入应用市场 ，点击 Jenkins，填写相关信息。&lt;/p&gt;
+&lt;img src=&#34;/images/integration/jenkins/1-1.png&#34; class=&#34;md-img-padding&#34; /&gt;
+&lt;h2 id=&#34;配置-jenkins-sso-登录&#34;&gt;配置 Jenkins SSO 登录&lt;/h2&gt;
+&lt;p&gt;配置 Jenkins SSO 登录，你需要有管理员权限。进入&lt;strong&gt;Dashboard&lt;/strong&gt;，点击&lt;strong&gt;系统设置&lt;/strong&gt;，找到&lt;strong&gt;插件管理&lt;/strong&gt;。&lt;/p&gt;
+&lt;img src=&#34;/images/integration/jenkins/2-1.png&#34; class=&#34;md-img-padding&#34; /&gt;
+&lt;p&gt;选择 &lt;strong&gt;可选插件&lt;/strong&gt;，&lt;strong&gt;搜索框&lt;/strong&gt; 输入 &lt;strong&gt;SAML&lt;/strong&gt;，可以得到两个搜索结果，选择如图所示插件 &lt;strong&gt;SAML Single Sign On(SSO)&lt;/strong&gt;。&lt;/p&gt;
+&lt;img src=&#34;/images/integration/jenkins/2-2.png&#34; class=&#34;md-img-padding&#34; /&gt;
+&lt;p&gt;下载成功后，将收到相关提示，如果你想启用插件需要 &lt;strong&gt;重启&lt;/strong&gt; &lt;code&gt;Jenkins&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;进入&lt;strong&gt;Dashboard&lt;/strong&gt;，点击&lt;strong&gt;系统设置&lt;/strong&gt;，找到&lt;strong&gt;全局安全配置&lt;/strong&gt;，&lt;strong&gt;启用&lt;/strong&gt; &lt;code&gt;miniOrange SAML 2.0&lt;/code&gt;。
+&lt;img src=&#34;/images/integration/jenkins/2-3.png&#34; class=&#34;md-img-padding&#34; /&gt;&lt;/p&gt;
+&lt;img src=&#34;/images/integration/jenkins/2-4.png&#34; class=&#34;md-img-padding&#34; /&gt;
+&lt;img src=&#34;/images/integration/jenkins/2-5.png&#34; class=&#34;md-img-padding&#34; /&gt;
+&lt;p&gt;填入 Authsaur 中对应的IDP metadata地址。&lt;/p&gt;
+&lt;h2 id=&#34;体验登录&#34;&gt;体验登录&lt;/h2&gt;
+&lt;p&gt;进入 &lt;strong&gt;Jenkins&lt;/strong&gt;，点击右上角 &lt;strong&gt;注销&lt;/strong&gt;，进入 &lt;strong&gt;登录&lt;/strong&gt; 页面。&lt;/p&gt;
+&lt;img src=&#34;/images/integration/jenkins/3-1.png&#34; class=&#34;md-img-padding&#34; /&gt;
+&lt;p&gt;点击 &lt;strong&gt;Login with IDP&lt;/strong&gt;，进入 &lt;strong&gt;Authsaur&lt;/strong&gt; 登录界面，在登录界面输入的用户账号密码，之后跳转到 &lt;strong&gt;Jenkins&lt;/strong&gt;，即成功实现登录 &lt;strong&gt;jenkins&lt;/strong&gt;。&lt;/p&gt;
+&lt;img src=&#34;/images/integration/jenkins/3-3.png&#34; class=&#34;md-img-padding&#34; /&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Connect: jira</title>
+      <link>/connect/apps/jira/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/apps/jira/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;在authsaur中创建应用&#34;&gt;在Authsaur中创建应用&lt;/h2&gt;
+&lt;p&gt;进入应用市场 ，点击 Jira，填写相关信息。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/jira/1-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;配置-jira&#34;&gt;配置 Jira&lt;/h2&gt;
+&lt;p&gt;以管理员身份登录 Jira，点击右上角设置按钮，点击「系统」。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/jira/2-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;体验登录&#34;&gt;体验登录&lt;/h2&gt;
+&lt;p&gt;进入Jira进行登录。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/jira/3-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Connect: jumpserver</title>
+      <link>/connect/apps/jumpserver/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/apps/jumpserver/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;在authsaur中创建应用&#34;&gt;在Authsaur中创建应用&lt;/h2&gt;
+&lt;p&gt;进入应用市场 ，点击 Jumpserver，填写相关信息。&lt;/p&gt;
+&lt;img src=&#34;/images/integration/cas-jumpserver/1-1.png&#34; class=&#34;md-img-padding&#34; /&gt;
+&lt;h2 id=&#34;在-jumpserver-中配置-cas&#34;&gt;在 JumpServer 中配置 CAS&lt;/h2&gt;
+&lt;p&gt;配置 JumpServer CAS 登录，你需要有管理员权限。以 &lt;code&gt;管理员身份&lt;/code&gt; 登录 JumpServer。&lt;/p&gt;
+&lt;img src=&#34;/images/integration/cas-jumpserver/1-1.png&#34; class=&#34;md-img-padding&#34; /&gt;
+&lt;p&gt;进入 &lt;strong&gt;JumpServer&lt;/strong&gt;，点击左侧导航栏 &lt;strong&gt;系统设置&lt;/strong&gt;，点击 &lt;strong&gt;认证设置&lt;/strong&gt;。点击 &lt;strong&gt;启用&lt;/strong&gt; CAS 认证。&lt;/p&gt;
+&lt;img src=&#34;/images/integration/cas-jumpserver/1-2.png&#34; class=&#34;md-img-padding&#34; /&gt;
+&lt;h2 id=&#34;体验登录&#34;&gt;体验登录&lt;/h2&gt;
+&lt;p&gt;进入 &lt;strong&gt;JumpServer&lt;/strong&gt; 登录页面， &lt;code&gt;点击&lt;/code&gt; 选择更多登录方式 &lt;strong&gt;CAS&lt;/strong&gt;。&lt;/p&gt;
+&lt;img src=&#34;/images/integration/cas-jumpserver/3-1.png&#34; class=&#34;md-img-padding&#34; /&gt;
+&lt;img src=&#34;/images/integration/cas-jumpserver/3-2.png&#34; class=&#34;md-img-padding&#34; /&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Connect: seafile</title>
+      <link>/connect/apps/seafile/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/apps/seafile/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;在authsaur中创建应用&#34;&gt;在Authsaur中创建应用&lt;/h2&gt;
+&lt;p&gt;进入应用市场 ，点击 Seafile，填写相关信息。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/seafile/1-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;配置-seafile&#34;&gt;配置 Seafile&lt;/h2&gt;
+&lt;p&gt;根据 &lt;a href=&#34;https://manual.seafile.com/deploy/oauth/&#34;&gt;Seafile 文档&lt;/a&gt;，找到 Seafile 配置文件 &lt;code&gt;seahub_settings.py&lt;/code&gt;，加入如下配置。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ENABLE_OAUTH &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#cb4b16&#34;&gt;True&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;# If create new user when he/she logs in Seafile for the first time, defalut `True`.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OAUTH_CREATE_UNKNOWN_USER &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#cb4b16&#34;&gt;True&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;# If active new user when he/she logs in Seafile for the first time, defalut `True`.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OAUTH_ACTIVATE_USER_AFTER_CREATION &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#cb4b16&#34;&gt;True&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;# Usually OAuth works through SSL layer. If your server is not parametrized to allow HTTPS, some method will raise an &amp;#34;oauthlib.oauth2.rfc6749.errors.InsecureTransportError&amp;#34;. Set this to `True` to avoid this error.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OAUTH_ENABLE_INSECURE_TRANSPORT &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#cb4b16&#34;&gt;True&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;# Client id/secret generated by authorization server when you register your client application.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OAUTH_CLIENT_ID &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;your-client-id&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OAUTH_CLIENT_SECRET &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;your-client-secret&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;# Callback url when user authentication succeeded. Note, the redirect url you input when you register your client application MUST be exactly the same as this value.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OAUTH_REDIRECT_URL &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;http://36.140.31.89:6380/oauth/callback/&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#586e75&#34;&gt;# The following should NOT be changed if you are using Github as OAuth provider.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OAUTH_PROVIDER_DOMAIN &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;example.com&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OAUTH_AUTHORIZATION_URL &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;http://116.205.137.175/oauth2.0/authorize&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OAUTH_TOKEN_URL &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;http://116.205.137.175/oauth2.0/accessToken&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OAUTH_USER_INFO_URL &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;http://116.205.137.175/oauth2.0/profile&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OAUTH_SCOPE &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;profile&amp;#34;&lt;/span&gt;,]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OAUTH_ATTRIBUTE_MAP &lt;span style=&#34;color:#719e07&#34;&gt;=&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;umail&amp;#34;&lt;/span&gt;: (&lt;span style=&#34;color:#cb4b16&#34;&gt;True&lt;/span&gt;, &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;email&amp;#34;&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;uname&amp;#34;&lt;/span&gt;: (&lt;span style=&#34;color:#cb4b16&#34;&gt;False&lt;/span&gt;, &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;配置完成后重启 Seafile。&lt;/p&gt;
+&lt;h2 id=&#34;体验登录&#34;&gt;体验登录&lt;/h2&gt;
+&lt;p&gt;在 Authsaur 中进入刚刚创建的应用的详情，点击体验登录。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/seafile/3-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在登录界面输入账号密码，即可登录成功。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/seafile/3-2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Connect: sentry</title>
+      <link>/connect/apps/sentry/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/apps/sentry/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;在authsaur中创建应用&#34;&gt;在Authsaur中创建应用&lt;/h2&gt;
+&lt;p&gt;进入应用市场 ，点击 Sentry，填写相关信息。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/sentry/1-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;配置-sentry&#34;&gt;配置 Sentry&lt;/h2&gt;
+&lt;p&gt;在 Sentry 中找到 &lt;strong&gt;Settings&lt;/strong&gt; - &lt;strong&gt;Auth&lt;/strong&gt; - &lt;strong&gt;SAML2&lt;/strong&gt;，点击「Configure」。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/sentry/2-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在 Authsaur 应用详情页找到 &lt;strong&gt;Metadata URL&lt;/strong&gt;，填写到 Sentry，并点击「获取元数据」。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/sentry/2-2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/sentry/2-3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;然后设置用户字段映射&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;IdP User ID&lt;/strong&gt; 是唯一标识，会被映射为 Sentry 的用户名，建议填写 &lt;code&gt;username&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;User Email&lt;/strong&gt; 即用户邮箱，建议填写 &lt;code&gt;email&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;First Name&lt;/strong&gt; 即名字，可选值有 &lt;code&gt;username&lt;/code&gt;, &lt;code&gt;name&lt;/code&gt;, &lt;code&gt;nickname&lt;/code&gt;, &lt;code&gt;familyName&lt;/code&gt;, &lt;code&gt;givenName&lt;/code&gt;, &lt;code&gt;middleName&lt;/code&gt;, &lt;code&gt;preferredUsername&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Last Name&lt;/strong&gt; 即姓氏，可选值有 &lt;code&gt;username&lt;/code&gt;, &lt;code&gt;name&lt;/code&gt;, &lt;code&gt;nickname&lt;/code&gt;, &lt;code&gt;familyName&lt;/code&gt;, &lt;code&gt;givenName&lt;/code&gt;, &lt;code&gt;middleName&lt;/code&gt;, &lt;code&gt;preferredUsername&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/sentry/2-4.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;保存设置，会跳转到 Authsaur 登录页，配置无误的话，登录完成后会跳转回配置页，显示配置成功。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/sentry/2-5.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;体验登录&#34;&gt;体验登录&lt;/h2&gt;
+&lt;p&gt;在Sentry中体验登录。&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Connect: sonarqube</title>
+      <link>/connect/apps/sonarqube/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/apps/sonarqube/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;在authsaur中创建应用&#34;&gt;在Authsaur中创建应用&lt;/h2&gt;
+&lt;p&gt;进入应用市场 ，点击 Sonarqube，填写相关信息。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/sonarqube/1-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;配置-sonarqube-sso-登录&#34;&gt;配置 Sonarqube SSO 登录&lt;/h2&gt;
+&lt;p&gt;配置Sonarqube的Server URL：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/sonarqube/2-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在 &lt;strong&gt;安全配置&lt;/strong&gt; 中填写相关信息。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/sonarqube/2-2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;体验登录&#34;&gt;体验登录&lt;/h2&gt;
+&lt;p&gt;退出当前用户，进入登录界面，选择 &lt;strong&gt;Login with Authsaur&lt;/strong&gt;(名字可能取决于 SAML 配置的 &lt;code&gt;IDP Name&lt;/code&gt;)。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/sonarqube/3-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;进入 Authsaur 登录页面。&lt;/p&gt;
+&lt;img src=&#34;/images/integration/sonarqube/3-3.png&#34; class=&#34;md-img-padding&#34; /&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Connect: 禅道</title>
+      <link>/connect/apps/zentao/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/apps/zentao/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;在authsaur中创建应用&#34;&gt;在Authsaur中创建应用&lt;/h2&gt;
+&lt;p&gt;进入应用市场 ，点击 禅道，填写相关信息。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/integration/zentao/1-1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;在禅道中创建应用&#34;&gt;在禅道中创建应用&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;登录禅道，到后台 &amp;gt; 二次开发 &amp;gt; 应用 &amp;gt; 添加应用&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;名称：没有要求，可以随意填写&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;代号：应用的唯一标识，复制&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;免密登录：开启&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;密钥：复制密钥&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;IP：勾选无限制&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;最后到后台 &amp;gt; 人员 &amp;gt; 用户 &amp;gt; 添加用户，新增一个用户名为“authsaur-admin”的用户&lt;/p&gt;
+&lt;h2 id=&#34;在authsaur中体验登录&#34;&gt;在Authsaur中体验登录&lt;/h2&gt;
+&lt;p&gt;在Authsaur应用面板中体验单点登录。&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

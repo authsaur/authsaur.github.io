@@ -1,0 +1,310 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-cn" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.112.1">
+<meta name="robots" content="index, follow">
+<link rel="shortcut icon" href="/favicon.ico">
+<title>SAML2 | Authsaur</title>
+<meta name="description" content="IDP metadata 端点 https://{authsaur-server}/idp/metadata 示例 &amp;lt;EntityDescriptor xmlns=&amp;#34;urn:oasis:names:tc:SAML:2.0:metadata&amp;#34; xmlns:ds=&amp;#34;http://www.w3.org/2000/09/xmldsig#&amp;#34; xmlns:shibmd=&amp;#34;urn:mace:shibboleth:metadata:1.0&amp;#34; xmlns:mdui=&amp;#34;urn:oasis:names:tc:SAML:metadata:ui&amp;#34; entityID=&amp;#34;https://{authsaur-server}/idp&amp;#34;&amp;gt; &amp;lt;IDPSSODescriptor errorURL=&amp;#34;https://{authsaur-server}/idp/error&amp;#34; protocolSupportEnumeration=&amp;#34;urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol urn:mace:shibboleth:1.0&amp;#34;&amp;gt; &amp;lt;Extensions&amp;gt; &amp;lt;shibmd:Scope regexp=&amp;#34;false&amp;#34;&amp;gt;example.org&amp;lt;/shibmd:Scope&amp;gt; &amp;lt;/Extensions&amp;gt; &amp;lt;KeyDescriptor use=&amp;#34;signing&amp;#34;&amp;gt; &amp;lt;ds:KeyInfo&amp;gt; &amp;lt;ds:X509Data&amp;gt; &amp;lt;ds:X509Certificate&amp;gt;MIIDEDCC&amp;lt;/ds:X509Certificate&amp;gt; &amp;lt;/ds:X509Data&amp;gt; &amp;lt;/ds:KeyInfo&amp;gt; &amp;lt;/KeyDescriptor&amp;gt; &amp;lt;KeyDescriptor use=&amp;#34;encryption&amp;#34;&amp;gt; &amp;lt;ds:KeyInfo&amp;gt; &amp;lt;ds:X509Data&amp;gt; &amp;lt;ds:X509Certificate&amp;gt;MIIDETCCA&amp;lt;/ds:X509Certificate&amp;gt; &amp;lt;/ds:X509Data&amp;gt; &amp;lt;/ds:KeyInfo&amp;gt; &amp;lt;/KeyDescriptor&amp;gt; &amp;lt;SingleLogoutService Binding=&amp;#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&amp;#34; Location=&amp;#34;https://{authsaur-server}/idp/profile/SAML2/POST/SLO&amp;#34;/&amp;gt; &amp;lt;SingleLogoutService Binding=&amp;#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect&amp;#34; Location=&amp;#34;https://{authsaur-server}/idp/profile/SAML2/Redirect/SLO&amp;#34;/&amp;gt; &amp;lt;NameIDFormat&amp;gt;urn:mace:shibboleth:1.0:nameIdentifier&amp;lt;/NameIDFormat&amp;gt; &amp;lt;NameIDFormat&amp;gt;urn:oasis:names:tc:SAML:2.0:nameid-format:transient&amp;lt;/NameIDFormat&amp;gt; &amp;lt;SingleSignOnService Binding=&amp;#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&amp;#34; Location=&amp;#34;https://{authsaur-server}/idp/profile/SAML2/POST/SSO&amp;#34;/&amp;gt; &amp;lt;SingleSignOnService Binding=&amp;#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign&amp;#34; Location=&amp;#34;https://{authsaur-server}/idp/profile/SAML2/POST-SimpleSign/SSO&amp;#34;/&amp;gt; &amp;lt;SingleSignOnService Binding=&amp;#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect&amp;#34; Location=&amp;#34;https://{authsaur-server}/idp/profile/SAML2/Redirect/SSO&amp;#34;/&amp;gt; &amp;lt;SingleSignOnService Binding=&amp;#34;urn:oasis:names:tc:SAML:2.0:bindings:SOAP&amp;#34; Location=&amp;#34;https://{authsaur-server}/idp/profile/SAML2/SOAP/ECP&amp;#34;/&amp;gt; &amp;lt;/IDPSSODescriptor&amp;gt; &amp;lt;/EntityDescriptor&amp;gt; &amp;lt;KeyDescriptor use=&amp;quot;signing&amp;quot;&amp;gt;字段为SAML X.509证书。 登录端点 https://{authsaur-server}/idp/profile/SAML2/Redirect/SSO?SAMLRequest=XX 其中xx值是urlencode(base64(deflate(authrequest)))。">
+<meta property="og:title" content="SAML2" />
+<meta property="og:description" content="IDP metadata 端点 https://{authsaur-server}/idp/metadata 示例 &lt;EntityDescriptor xmlns=&#34;urn:oasis:names:tc:SAML:2.0:metadata&#34; xmlns:ds=&#34;http://www.w3.org/2000/09/xmldsig#&#34; xmlns:shibmd=&#34;urn:mace:shibboleth:metadata:1.0&#34; xmlns:mdui=&#34;urn:oasis:names:tc:SAML:metadata:ui&#34; entityID=&#34;https://{authsaur-server}/idp&#34;&gt; &lt;IDPSSODescriptor errorURL=&#34;https://{authsaur-server}/idp/error&#34; protocolSupportEnumeration=&#34;urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol urn:mace:shibboleth:1.0&#34;&gt; &lt;Extensions&gt; &lt;shibmd:Scope regexp=&#34;false&#34;&gt;example.org&lt;/shibmd:Scope&gt; &lt;/Extensions&gt; &lt;KeyDescriptor use=&#34;signing&#34;&gt; &lt;ds:KeyInfo&gt; &lt;ds:X509Data&gt; &lt;ds:X509Certificate&gt;MIIDEDCC&lt;/ds:X509Certificate&gt; &lt;/ds:X509Data&gt; &lt;/ds:KeyInfo&gt; &lt;/KeyDescriptor&gt; &lt;KeyDescriptor use=&#34;encryption&#34;&gt; &lt;ds:KeyInfo&gt; &lt;ds:X509Data&gt; &lt;ds:X509Certificate&gt;MIIDETCCA&lt;/ds:X509Certificate&gt; &lt;/ds:X509Data&gt; &lt;/ds:KeyInfo&gt; &lt;/KeyDescriptor&gt; &lt;SingleLogoutService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/POST/SLO&#34;/&gt; &lt;SingleLogoutService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/Redirect/SLO&#34;/&gt; &lt;NameIDFormat&gt;urn:mace:shibboleth:1.0:nameIdentifier&lt;/NameIDFormat&gt; &lt;NameIDFormat&gt;urn:oasis:names:tc:SAML:2.0:nameid-format:transient&lt;/NameIDFormat&gt; &lt;SingleSignOnService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/POST/SSO&#34;/&gt; &lt;SingleSignOnService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/POST-SimpleSign/SSO&#34;/&gt; &lt;SingleSignOnService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/Redirect/SSO&#34;/&gt; &lt;SingleSignOnService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:SOAP&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/SOAP/ECP&#34;/&gt; &lt;/IDPSSODescriptor&gt; &lt;/EntityDescriptor&gt; &lt;KeyDescriptor use=&quot;signing&quot;&gt;字段为SAML X.509证书。 登录端点 https://{authsaur-server}/idp/profile/SAML2/Redirect/SSO?SAMLRequest=XX 其中xx值是urlencode(base64(deflate(authrequest)))。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/connect/protocols/saml2/" /><meta property="article:section" content="connect" />
+<meta property="article:published_time" content="2017-01-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2017-01-05T00:00:00+00:00" />
+<meta itemprop="name" content="SAML2">
+<meta itemprop="description" content="IDP metadata 端点 https://{authsaur-server}/idp/metadata 示例 &lt;EntityDescriptor xmlns=&#34;urn:oasis:names:tc:SAML:2.0:metadata&#34; xmlns:ds=&#34;http://www.w3.org/2000/09/xmldsig#&#34; xmlns:shibmd=&#34;urn:mace:shibboleth:metadata:1.0&#34; xmlns:mdui=&#34;urn:oasis:names:tc:SAML:metadata:ui&#34; entityID=&#34;https://{authsaur-server}/idp&#34;&gt; &lt;IDPSSODescriptor errorURL=&#34;https://{authsaur-server}/idp/error&#34; protocolSupportEnumeration=&#34;urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol urn:mace:shibboleth:1.0&#34;&gt; &lt;Extensions&gt; &lt;shibmd:Scope regexp=&#34;false&#34;&gt;example.org&lt;/shibmd:Scope&gt; &lt;/Extensions&gt; &lt;KeyDescriptor use=&#34;signing&#34;&gt; &lt;ds:KeyInfo&gt; &lt;ds:X509Data&gt; &lt;ds:X509Certificate&gt;MIIDEDCC&lt;/ds:X509Certificate&gt; &lt;/ds:X509Data&gt; &lt;/ds:KeyInfo&gt; &lt;/KeyDescriptor&gt; &lt;KeyDescriptor use=&#34;encryption&#34;&gt; &lt;ds:KeyInfo&gt; &lt;ds:X509Data&gt; &lt;ds:X509Certificate&gt;MIIDETCCA&lt;/ds:X509Certificate&gt; &lt;/ds:X509Data&gt; &lt;/ds:KeyInfo&gt; &lt;/KeyDescriptor&gt; &lt;SingleLogoutService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/POST/SLO&#34;/&gt; &lt;SingleLogoutService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/Redirect/SLO&#34;/&gt; &lt;NameIDFormat&gt;urn:mace:shibboleth:1.0:nameIdentifier&lt;/NameIDFormat&gt; &lt;NameIDFormat&gt;urn:oasis:names:tc:SAML:2.0:nameid-format:transient&lt;/NameIDFormat&gt; &lt;SingleSignOnService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/POST/SSO&#34;/&gt; &lt;SingleSignOnService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/POST-SimpleSign/SSO&#34;/&gt; &lt;SingleSignOnService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/Redirect/SSO&#34;/&gt; &lt;SingleSignOnService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:SOAP&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/SOAP/ECP&#34;/&gt; &lt;/IDPSSODescriptor&gt; &lt;/EntityDescriptor&gt; &lt;KeyDescriptor use=&quot;signing&quot;&gt;字段为SAML X.509证书。 登录端点 https://{authsaur-server}/idp/profile/SAML2/Redirect/SSO?SAMLRequest=XX 其中xx值是urlencode(base64(deflate(authrequest)))。"><meta itemprop="datePublished" content="2017-01-05T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2017-01-05T00:00:00+00:00" />
+<meta itemprop="wordCount" content="64">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SAML2"/>
+<meta name="twitter:description" content="IDP metadata 端点 https://{authsaur-server}/idp/metadata 示例 &lt;EntityDescriptor xmlns=&#34;urn:oasis:names:tc:SAML:2.0:metadata&#34; xmlns:ds=&#34;http://www.w3.org/2000/09/xmldsig#&#34; xmlns:shibmd=&#34;urn:mace:shibboleth:metadata:1.0&#34; xmlns:mdui=&#34;urn:oasis:names:tc:SAML:metadata:ui&#34; entityID=&#34;https://{authsaur-server}/idp&#34;&gt; &lt;IDPSSODescriptor errorURL=&#34;https://{authsaur-server}/idp/error&#34; protocolSupportEnumeration=&#34;urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol urn:mace:shibboleth:1.0&#34;&gt; &lt;Extensions&gt; &lt;shibmd:Scope regexp=&#34;false&#34;&gt;example.org&lt;/shibmd:Scope&gt; &lt;/Extensions&gt; &lt;KeyDescriptor use=&#34;signing&#34;&gt; &lt;ds:KeyInfo&gt; &lt;ds:X509Data&gt; &lt;ds:X509Certificate&gt;MIIDEDCC&lt;/ds:X509Certificate&gt; &lt;/ds:X509Data&gt; &lt;/ds:KeyInfo&gt; &lt;/KeyDescriptor&gt; &lt;KeyDescriptor use=&#34;encryption&#34;&gt; &lt;ds:KeyInfo&gt; &lt;ds:X509Data&gt; &lt;ds:X509Certificate&gt;MIIDETCCA&lt;/ds:X509Certificate&gt; &lt;/ds:X509Data&gt; &lt;/ds:KeyInfo&gt; &lt;/KeyDescriptor&gt; &lt;SingleLogoutService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/POST/SLO&#34;/&gt; &lt;SingleLogoutService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/Redirect/SLO&#34;/&gt; &lt;NameIDFormat&gt;urn:mace:shibboleth:1.0:nameIdentifier&lt;/NameIDFormat&gt; &lt;NameIDFormat&gt;urn:oasis:names:tc:SAML:2.0:nameid-format:transient&lt;/NameIDFormat&gt; &lt;SingleSignOnService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/POST/SSO&#34;/&gt; &lt;SingleSignOnService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/POST-SimpleSign/SSO&#34;/&gt; &lt;SingleSignOnService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/Redirect/SSO&#34;/&gt; &lt;SingleSignOnService Binding=&#34;urn:oasis:names:tc:SAML:2.0:bindings:SOAP&#34; Location=&#34;https://{authsaur-server}/idp/profile/SAML2/SOAP/ECP&#34;/&gt; &lt;/IDPSSODescriptor&gt; &lt;/EntityDescriptor&gt; &lt;KeyDescriptor use=&quot;signing&quot;&gt;字段为SAML X.509证书。 登录端点 https://{authsaur-server}/idp/profile/SAML2/Redirect/SSO?SAMLRequest=XX 其中xx值是urlencode(base64(deflate(authrequest)))。"/>
+
+
+
+
+<link rel="preload" href="/scss/main.min.58eed10dc2a85f518e534c2f65b4356b1554725cc7015550449f5645d6b269e1.css" as="style">
+<link href="/scss/main.min.58eed10dc2a85f518e534c2f65b4356b1554725cc7015550449f5645d6b269e1.css" rel="stylesheet" integrity="">
+
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
+  crossorigin="anonymous"></script>
+
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"></span><span class="navbar-brand__name">Authsaur</span></a>
+  <div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+    <ul class="navbar-nav mt-2 mt-lg-0">
+      <li class="nav-item mr-4 mb-2 mb-lg-0">
+        <a class="nav-link" href="/docs/"><span>文档</span></a>
+      </li>
+      <li class="nav-item mr-4 mb-2 mb-lg-0">
+        <a class="nav-link active" href="/connect/"><span class="active">应用集成</span></a>
+      </li>
+      <li class="nav-item mr-4 mb-2 mb-lg-0">
+        <a class="nav-link" href="https://github.com/authsaur/" target="_blank"><i class='fa-brands fa-github'></i><span>GitHub</span></a>
+      </li>
+      <li class="nav-item mr-4 mb-2 mb-lg-0">
+        <a class="nav-link" href="/about/"><span>关于</span></a>
+      </li>
+      </ul>
+  </div>
+  <div class="navbar-nav d-none d-lg-block">
+    
+  </div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            
+<div id="td-sidebar-menu" class="td-sidebar__inner">
+  <div id="content-mobile">
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type="button" data-toggle="collapse" data-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  </div>
+  <div id="content-desktop"></div>
+  <nav class="collapse td-sidebar-nav" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pr-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-connect-li">
+  <a href="/connect/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-connect"><span class="">应用集成</span></a>
+  <ul class="ul-1">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-connectprotocols-li">
+  <a href="/connect/protocols/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-connectprotocols"><span class="">集成指导</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-connectprotocolsprincipal-li">
+  <a href="/connect/protocols/principal/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-connectprotocolsprincipal"><span class="">用户属性</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-connectprotocolscas2-li">
+  <a href="/connect/protocols/cas2/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-connectprotocolscas2"><span class="">CAS2</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-connectprotocolsoauth2-li">
+  <a href="/connect/protocols/oauth2/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-connectprotocolsoauth2"><span class="">OAuth2</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-connectprotocolsoidc-li">
+  <a href="/connect/protocols/oidc/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-connectprotocolsoidc"><span class="">OIDC</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-connectprotocolssaml2-li">
+  <a href="/connect/protocols/saml2/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-connectprotocolssaml2"><span class="td-sidebar-nav-active-item">SAML2</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-connectapps-li">
+  <a href="/connect/apps/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-connectapps"><span class="">案例</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-connectappscodesign-li">
+  <a href="/connect/apps/codesign/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-connectappscodesign"><span class="">Co Design</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-connectappsconfluence-li">
+  <a href="/connect/apps/confluence/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-connectappsconfluence"><span class="">confluence</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-connectappsgerrit-li">
+  <a href="/connect/apps/gerrit/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-connectappsgerrit"><span class="">gerrit</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-connectappsgitlab-li">
+  <a href="/connect/apps/gitlab/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-connectappsgitlab"><span class="">gitlab</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-connectappsgrafana-li">
+  <a href="/connect/apps/grafana/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-connectappsgrafana"><span class="">grafana</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-connectappsjenkins-li">
+  <a href="/connect/apps/jenkins/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-connectappsjenkins"><span class="">Jenkins</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-connectappsjira-li">
+  <a href="/connect/apps/jira/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-connectappsjira"><span class="">jira</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-connectappsjumpserver-li">
+  <a href="/connect/apps/jumpserver/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-connectappsjumpserver"><span class="">jumpserver</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-connectappsseafile-li">
+  <a href="/connect/apps/seafile/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-connectappsseafile"><span class="">seafile</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-connectappssentry-li">
+  <a href="/connect/apps/sentry/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-connectappssentry"><span class="">sentry</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-connectappssonarqube-li">
+  <a href="/connect/apps/sonarqube/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-connectappssonarqube"><span class="">sonarqube</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-connectappszentao-li">
+  <a href="/connect/apps/zentao/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-connectappszentao"><span class="">禅道</span></a>
+</li>
+  </ul>
+</li>
+  </ul>
+</li>
+    </ul>
+  </nav>
+</div>
+
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            
+<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+
+</div>
+
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#idp-metadata-端点">IDP metadata 端点</a>
+      <ul>
+        <li><a href="#示例">示例</a></li>
+      </ul>
+    </li>
+    <li><a href="#登录端点">登录端点</a></li>
+  </ul>
+</nav>
+      </div>
+    
+            
+
+	
+		
+			
+				
+			
+			
+
+
+
+		
+			
+				
+			
+			
+
+
+
+		
+	
+
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
+            
+  
+
+            
+            
+<div class="td-content">
+	<h1>SAML2</h1>
+	
+	<header class="article-meta">
+		
+
+  
+    
+      
+
+
+    
+      
+
+
+    
+  
+
+		
+	</header>    
+	<h2 id="idp-metadata-端点">IDP metadata 端点</h2>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>https://{authsaur-server}/idp/metadata
+</span></span></code></pre></div><h3 id="示例">示例</h3>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#268bd2">&lt;EntityDescriptor</span>
+</span></span><span style="display:flex;"><span>    xmlns=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:2.0:metadata&#34;</span>
+</span></span><span style="display:flex;"><span>    xmlns:ds=<span style="color:#2aa198">&#34;http://www.w3.org/2000/09/xmldsig#&#34;</span>
+</span></span><span style="display:flex;"><span>    xmlns:shibmd=<span style="color:#2aa198">&#34;urn:mace:shibboleth:metadata:1.0&#34;</span>
+</span></span><span style="display:flex;"><span>    xmlns:mdui=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:metadata:ui&#34;</span> entityID=<span style="color:#2aa198">&#34;https://{authsaur-server}/idp&#34;</span><span style="color:#268bd2">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">&lt;IDPSSODescriptor</span> errorURL=<span style="color:#2aa198">&#34;https://{authsaur-server}/idp/error&#34;</span> protocolSupportEnumeration=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol urn:mace:shibboleth:1.0&#34;</span><span style="color:#268bd2">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;Extensions&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#268bd2">&lt;shibmd:Scope</span> regexp=<span style="color:#2aa198">&#34;false&#34;</span><span style="color:#268bd2">&gt;</span>example.org<span style="color:#268bd2">&lt;/shibmd:Scope&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;/Extensions&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;KeyDescriptor</span> use=<span style="color:#2aa198">&#34;signing&#34;</span><span style="color:#268bd2">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#268bd2">&lt;ds:KeyInfo&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#268bd2">&lt;ds:X509Data&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#268bd2">&lt;ds:X509Certificate&gt;</span>MIIDEDCC<span style="color:#268bd2">&lt;/ds:X509Certificate&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#268bd2">&lt;/ds:X509Data&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#268bd2">&lt;/ds:KeyInfo&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;/KeyDescriptor&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;KeyDescriptor</span> use=<span style="color:#2aa198">&#34;encryption&#34;</span><span style="color:#268bd2">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#268bd2">&lt;ds:KeyInfo&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#268bd2">&lt;ds:X509Data&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#268bd2">&lt;ds:X509Certificate&gt;</span>MIIDETCCA<span style="color:#268bd2">&lt;/ds:X509Certificate&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#268bd2">&lt;/ds:X509Data&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#268bd2">&lt;/ds:KeyInfo&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;/KeyDescriptor&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;SingleLogoutService</span> Binding=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&#34;</span> Location=<span style="color:#2aa198">&#34;https://{authsaur-server}/idp/profile/SAML2/POST/SLO&#34;</span><span style="color:#268bd2">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;SingleLogoutService</span> Binding=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect&#34;</span> Location=<span style="color:#2aa198">&#34;https://{authsaur-server}/idp/profile/SAML2/Redirect/SLO&#34;</span><span style="color:#268bd2">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;NameIDFormat&gt;</span>urn:mace:shibboleth:1.0:nameIdentifier<span style="color:#268bd2">&lt;/NameIDFormat&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;NameIDFormat&gt;</span>urn:oasis:names:tc:SAML:2.0:nameid-format:transient<span style="color:#268bd2">&lt;/NameIDFormat&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;SingleSignOnService</span> Binding=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&#34;</span> Location=<span style="color:#2aa198">&#34;https://{authsaur-server}/idp/profile/SAML2/POST/SSO&#34;</span><span style="color:#268bd2">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;SingleSignOnService</span> Binding=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign&#34;</span> Location=<span style="color:#2aa198">&#34;https://{authsaur-server}/idp/profile/SAML2/POST-SimpleSign/SSO&#34;</span><span style="color:#268bd2">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;SingleSignOnService</span> Binding=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect&#34;</span> Location=<span style="color:#2aa198">&#34;https://{authsaur-server}/idp/profile/SAML2/Redirect/SSO&#34;</span><span style="color:#268bd2">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">&lt;SingleSignOnService</span> Binding=<span style="color:#2aa198">&#34;urn:oasis:names:tc:SAML:2.0:bindings:SOAP&#34;</span> Location=<span style="color:#2aa198">&#34;https://{authsaur-server}/idp/profile/SAML2/SOAP/ECP&#34;</span><span style="color:#268bd2">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">&lt;/IDPSSODescriptor&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">&lt;/EntityDescriptor&gt;</span>
+</span></span></code></pre></div><ul>
+<li><code>&lt;KeyDescriptor use=&quot;signing&quot;&gt;</code>字段为SAML X.509证书。</li>
+</ul>
+<h2 id="登录端点">登录端点</h2>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>https://{authsaur-server}/idp/profile/SAML2/Redirect/SSO?SAMLRequest=XX
+</span></span></code></pre></div><p>其中xx值是urlencode(base64(deflate(authrequest)))。</p>
+
+	
+	
+	
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      
+<footer class="bg-dark py-5 row d-print-none footer-margin-0">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="User mailing list" aria-label="User mailing list">
+    <a class="text-white" target="_blank" rel="noopener noreferrer" href="mailto:sayi@163.com">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="GitHub" aria-label="GitHub">
+    <a class="text-white" target="_blank" rel="noopener noreferrer" href="https://github.com/authsaur">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">&copy; 2023 authsaur.deepoove.com copyright 保留所有权利</small>
+        
+	
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+
+    </div>
+    <script src="/js/main.min.be25a680a0d95dc8b5d6664622e2134aa894220e2f224ef609e00f633a3a1b32.js" integrity="sha256-viWmgKDZXci11mZGIuITSqiUIg4vIk72CeAPYzo6GzI=" crossorigin="anonymous"></script>
+<script src='/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

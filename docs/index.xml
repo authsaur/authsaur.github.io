@@ -16,6 +16,30 @@
     
     
     <item>
+      <title>Connect: 用户属性</title>
+      <link>/connect/protocols/principal/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/protocols/principal/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Authsaur用户属性发布指第三方集成应用可能获取到的属性字段，第三方应用根据Authsaur用户属性标识或映射自身系统中的用户。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;uprincipal：用户唯一ID&lt;/li&gt;
+&lt;li&gt;uname：姓名&lt;/li&gt;
+&lt;li&gt;umail：邮箱&lt;/li&gt;
+&lt;li&gt;uphone：手机号&lt;/li&gt;
+&lt;li&gt;avatar：头像&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在Authsaur控制台应用详情中可以重命名或者隐藏这些属性。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+      </description>
+    </item>
+    
+    <item>
       <title>Docs: 创建用户</title>
       <link>/docs/guide/addaccount/</link>
       <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
@@ -90,6 +114,56 @@ OAuth2应用的登录地址为：&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://{authsaur_ip}/oauth2.0/authorize?client_id=demo-id&amp;amp;response_type=code&amp;amp;redirect_uri=http://127.0.0.1:8090
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Connect: CAS2</title>
+      <link>/connect/protocols/cas2/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/protocols/cas2/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;登录端点&#34;&gt;登录端点&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://{authsaur-server}/login
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;参数&#34;&gt;参数&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;service [可选]- 客户端尝试访问的应用程序的标识符，在几乎所有情况下，这都是应用程序提供的CAS回调地址URL，成功登录将客户端重定向到“service”参数指定的 URL，并且携带参数&amp;quot;ticket&amp;quot;。请注意，作为 HTTP 请求参数，此 URL 值必须进行 URL 编码。&lt;/li&gt;
+&lt;li&gt;renew [可选]- 如果设置此参数，将绕过单点登录。在这种情况下，无论是否存在单点登录会话，都将要求客户端提供凭据。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;示例&#34;&gt;示例&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;https://{authsaur-server}/login?service=http%3A%2F%2Fwww.service.com
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;登出端点&#34;&gt;登出端点&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://{authsaur-server}/logout
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;参数-1&#34;&gt;参数&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;service [可选] - 登出后重定向地址&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;示例-1&#34;&gt;示例&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;https://{authsaur-server}/logout?service=http%3A%2F%2Fwww.service.com
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;service-ticket-检验端点cas-20&#34;&gt;service ticket 检验端点（CAS 2.0）&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;GET https://{authsaur-server}/serviceValidate
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;参数-2&#34;&gt;参数&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;service [必须]- 为其签发票证的应用程序的标识符，在几乎所有情况下，这都是应用程序的URL。&lt;/li&gt;
+&lt;li&gt;ticket [必须]- 登录成功后重定向到应用作为HTTP 请求参数的&amp;quot;ticket&amp;quot;，以字符“ST-”开头。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;响应&#34;&gt;响应&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;cas:serviceResponse&lt;/span&gt; xmlns:cas=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#39;http://www.yale.edu/tp/cas&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;cas:authenticationSuccess&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;cas:user&amp;gt;&lt;/span&gt;Sayi&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/cas:user&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;cas:attributes&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;cas:uprincipal&amp;gt;&lt;/span&gt;Sayi&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/cas:uprincipal&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;cas:umail&amp;gt;&lt;/span&gt;sayi90@163.com&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/cas:uprincipal&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;cas:uname&amp;gt;&lt;/span&gt;某某某&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/cas:uprincipal&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/cas:attributes&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/cas:authenticationSuccess&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/cas:serviceResponse&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;示例-2&#34;&gt;示例&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;https://{authsaur-server}/serviceValidate?service=http%3A%2F%2Fwww.service.com&amp;amp;ticket=ST-1856339-aA5Yuvrxzpv8Tau1cYQ7
+&lt;/code&gt;&lt;/pre&gt;
       </description>
     </item>
     
@@ -392,6 +466,148 @@ OAuth2应用的登录地址为：&lt;/li&gt;
 &lt;p&gt;进入 &lt;strong&gt;JumpServer&lt;/strong&gt; 登录页面， &lt;code&gt;点击&lt;/code&gt; 选择更多登录方式 &lt;strong&gt;CAS&lt;/strong&gt;。&lt;/p&gt;
 &lt;img src=&#34;/images/integration/cas-jumpserver/3-1.png&#34; class=&#34;md-img-padding&#34; /&gt;
 &lt;img src=&#34;/images/integration/cas-jumpserver/3-2.png&#34; class=&#34;md-img-padding&#34; /&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Connect: OAuth2</title>
+      <link>/connect/protocols/oauth2/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/protocols/oauth2/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;登录端点&#34;&gt;登录端点&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://{authsaur-server}/oauth2.0/authorize
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;参数&#34;&gt;参数&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;response_type [必须] - 参数表示要求返回授权码（code）&lt;/li&gt;
+&lt;li&gt;client_id [必须] - 参数让认证源知道是哪个系统在请求用户信息&lt;/li&gt;
+&lt;li&gt;redirect_uri [必须] - 参数是接受或拒绝请求后的跳转网址&lt;/li&gt;
+&lt;li&gt;scope [可选] - 表示要求的授权范围&lt;/li&gt;
+&lt;li&gt;state [可选] - 成功登录回调时验证合法性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;示例&#34;&gt;示例&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;https://{authsaur-server}/oauth2.0/authorize?client_id=loginclient&amp;amp;response_type=code&amp;amp;redirect_uri=http://service.com/oauth/callback
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;生成授权访问令牌端点&#34;&gt;生成授权访问令牌端点&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;POST https://{authsaur-server}/oauth2.0/accessToken,/oauth2.0/token
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;参数-1&#34;&gt;参数&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;grant_type [必须] - 授权模式（authorization_code）&lt;/li&gt;
+&lt;li&gt;code [必须] - 回调返回的HTTP参数code&lt;/li&gt;
+&lt;li&gt;client_id [必须] - 参数让认证源知道是哪个系统在请求用户信息&lt;/li&gt;
+&lt;li&gt;client_secret [必须] - 密钥&lt;/li&gt;
+&lt;li&gt;redirect_uri [必须] - 应用服务唯一标识&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;示例-1&#34;&gt;示例&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;curl --location &amp;#39;https://{authsaur-server}/oauth2.0/accessToken&amp;#39; \
+--header &amp;#39;Content-Type: application/x-www-form-urlencoded&amp;#39; \
+--data-urlencode &amp;#39;grant_type=authorization_code&amp;#39; \
+--data-urlencode &amp;#39;code=OC-5-gZT8dIc0R5ShToqJh94PVmnQ-gavtgjI&amp;#39; \
+--data-urlencode &amp;#39;client_id=loginclient&amp;#39; \
+--data-urlencode &amp;#39;client_secret=secret&amp;#39; \
+--data-urlencode &amp;#39;redirect_uri=http://service.com/&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;用户个人资料端点&#34;&gt;用户个人资料端点&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;GET https://{authsaur-server}/oauth2.0/profile
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;参数-2&#34;&gt;参数&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;access_token [必须] - 授权令牌&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;示例-2&#34;&gt;示例&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;https://{authsaur-server}/oauth2.0/profile?access_token=AT-2-OSTX0999bNtvzI62qTpSwDbGtBygR0Ix
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Connect: OIDC</title>
+      <link>/connect/protocols/oidc/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/protocols/oidc/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;用于查询-oidc-配置信息和元数据的发现端点&#34;&gt;用于查询 OIDC 配置信息和元数据的发现端点。&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://{authsaur-server}/oidc/.well-known
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;示例&#34;&gt;示例&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;issuer&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://{authsaur-server}/oidc&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;claims_parameter_supported&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#cb4b16&#34;&gt;true&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;request_uri_parameter_supported&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#cb4b16&#34;&gt;true&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;request_parameter_supported&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#cb4b16&#34;&gt;true&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;backchannel_logout_supported&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#cb4b16&#34;&gt;true&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;frontchannel_logout_supported&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#cb4b16&#34;&gt;true&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  # jwks
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;jwks_uri&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://{authsaur-server}/oidc/jwks&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  # 授权登录端点
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;authorization_endpoint&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://{authsaur-server}/oidc/oidcAuthorize&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  # 生成授权访问令牌端点
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;token_endpoint&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://{authsaur-server}/oidc/oidcAccessToken&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  # 用户个人资料端点
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;userinfo_endpoint&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://{authsaur-server}/oidc/oidcProfile&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  # 注销端点
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;end_session_endpoint&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://{authsaur-server}/oidc/oidcLogout&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;backchannel_logout_session_supported&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#cb4b16&#34;&gt;true&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;#34;frontchannel_logout_session_supported&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#cb4b16&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Connect: SAML2</title>
+      <link>/connect/protocols/saml2/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/connect/protocols/saml2/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;idp-metadata-端点&#34;&gt;IDP metadata 端点&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://{authsaur-server}/idp/metadata
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;示例&#34;&gt;示例&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;EntityDescriptor&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    xmlns=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:metadata&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    xmlns:ds=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;http://www.w3.org/2000/09/xmldsig#&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    xmlns:shibmd=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:mace:shibboleth:metadata:1.0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    xmlns:mdui=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:metadata:ui&amp;#34;&lt;/span&gt; entityID=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://{authsaur-server}/idp&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;IDPSSODescriptor&lt;/span&gt; errorURL=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://{authsaur-server}/idp/error&amp;#34;&lt;/span&gt; protocolSupportEnumeration=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol urn:mace:shibboleth:1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;Extensions&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;shibmd:Scope&lt;/span&gt; regexp=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;false&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;example.org&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/shibmd:Scope&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/Extensions&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;KeyDescriptor&lt;/span&gt; use=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;signing&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:KeyInfo&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:X509Data&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:X509Certificate&amp;gt;&lt;/span&gt;MIIDEDCC&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/ds:X509Certificate&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/ds:X509Data&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/ds:KeyInfo&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/KeyDescriptor&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;KeyDescriptor&lt;/span&gt; use=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;encryption&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:KeyInfo&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:X509Data&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;ds:X509Certificate&amp;gt;&lt;/span&gt;MIIDETCCA&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/ds:X509Certificate&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/ds:X509Data&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/ds:KeyInfo&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/KeyDescriptor&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;SingleLogoutService&lt;/span&gt; Binding=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&amp;#34;&lt;/span&gt; Location=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://{authsaur-server}/idp/profile/SAML2/POST/SLO&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;SingleLogoutService&lt;/span&gt; Binding=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect&amp;#34;&lt;/span&gt; Location=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://{authsaur-server}/idp/profile/SAML2/Redirect/SLO&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;NameIDFormat&amp;gt;&lt;/span&gt;urn:mace:shibboleth:1.0:nameIdentifier&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/NameIDFormat&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;NameIDFormat&amp;gt;&lt;/span&gt;urn:oasis:names:tc:SAML:2.0:nameid-format:transient&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/NameIDFormat&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;SingleSignOnService&lt;/span&gt; Binding=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&amp;#34;&lt;/span&gt; Location=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://{authsaur-server}/idp/profile/SAML2/POST/SSO&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;SingleSignOnService&lt;/span&gt; Binding=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign&amp;#34;&lt;/span&gt; Location=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://{authsaur-server}/idp/profile/SAML2/POST-SimpleSign/SSO&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;SingleSignOnService&lt;/span&gt; Binding=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect&amp;#34;&lt;/span&gt; Location=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://{authsaur-server}/idp/profile/SAML2/Redirect/SSO&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;SingleSignOnService&lt;/span&gt; Binding=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;urn:oasis:names:tc:SAML:2.0:bindings:SOAP&amp;#34;&lt;/span&gt; Location=&lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;https://{authsaur-server}/idp/profile/SAML2/SOAP/ECP&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/IDPSSODescriptor&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#268bd2&#34;&gt;&amp;lt;/EntityDescriptor&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;KeyDescriptor use=&amp;quot;signing&amp;quot;&amp;gt;&lt;/code&gt;字段为SAML X.509证书。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;登录端点&#34;&gt;登录端点&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;https://{authsaur-server}/idp/profile/SAML2/Redirect/SSO?SAMLRequest=XX
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中xx值是urlencode(base64(deflate(authrequest)))。&lt;/p&gt;
+
       </description>
     </item>
     
